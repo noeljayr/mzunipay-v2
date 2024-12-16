@@ -1,0 +1,252 @@
+.modal {
+  position: fixed;
+  z-index: 7;
+  right: 0;
+  top: 0;
+  width: 40%;
+  background-color: var(--pure-white);
+  padding: 1rem;
+  height: 100vh;
+  border-left: 1px solid var(--border-2);
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  transition: var(--transition);
+  opacity: 0;
+  visibility: hidden;
+  width: 0;
+  overflow: hidden;
+}
+
+.transfer-modal {
+  display: grid;
+  grid-template-rows: auto auto 1fr;
+}
+
+.modal-active {
+  opacity: 1;
+  visibility: visible;
+  width: 40%;
+}
+
+.modal h1 {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+  border-bottom: 1px solid var(--border);
+  padding-bottom: 1rem;
+}
+
+.modal h1 .close {
+  background-color: var(--border-2);
+  padding: 0.25rem;
+  border-radius: var(--radius);
+  border: 1px solid var(--border-2);
+  cursor: pointer;
+  font-size: var(--font-s);
+  color: var(--primary);
+  padding-right: 0.75rem;
+  padding-left: 0.5rem;
+  align-items: center;
+}
+.modal h1 .close svg {
+  width: 0.9rem;
+  height: 0.9rem;
+}
+.modal h1 .close svg path {
+  stroke: var(--primary);
+  stroke-width: 2px;
+}
+
+.modal form {
+  display: flex;
+  width: 100%;
+  height: 100%;
+  flex-direction: column;
+}
+
+.modal-input-group {
+  display: grid;
+  grid-template-columns: 35% 1fr;
+  width: 100%;
+  border-bottom: 1px solid var(--border);
+  padding-bottom: 1rem;
+  padding-top: 0.75rem;
+}
+
+.deposit-amount {
+  border-bottom: 0;
+  padding-bottom: 0;
+}
+
+.deposit-amount .extra-info * {
+  font-size: 0.65rem;
+}
+
+.modal-input-group:first-child {
+  padding-top: 0;
+}
+
+.modal-input-group-last-child {
+  padding-bottom: 0;
+  border-bottom: 0;
+  border-bottom: transparent;
+}
+
+.modal-input-group .label {
+  font-weight: 400;
+}
+
+.modal-input-group div .tip {
+  font-size: var(--font-ss);
+  background-color: rgba(121, 121, 121, 0.15);
+  color: var(--pending);
+  font-size: var(--font-ss);
+  padding: 0.5rem;
+  padding-bottom: 0.25rem;
+  padding-top: 0.25rem;
+  border-radius: 0.5rem;
+  font-weight: 400;
+  gap: 5px;
+}
+
+.modal-input-group div .tip svg {
+  height: 1rem;
+  width: 1rem;
+}
+
+.modal-input-group div .tip svg path {
+  stroke: var(--pending);
+}
+.modal-input-group input {
+  height: 2.5rem;
+  border-radius: var(--radius);
+  padding: var(--padding);
+  border-radius: var(--radius);
+  border: 1px solid var(--border-2);
+  outline: none;
+  background-color: rgba(246, 254, 249, 0.5);
+}
+
+.modal-cta-container {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  width: 17rem;
+  margin-left: auto;
+  gap: 1rem;
+  margin-top: auto;
+}
+
+.modal-cta-container .cta,
+.modal-cta-container .cta-2 {
+  width: 100%;
+}
+
+.modal-overlay {
+  background-color: var(--border);
+  height: 100vh;
+  width: 100vw;
+  position: fixed;
+  z-index: 6;
+  backdrop-filter: blur(2px);
+  left: 0;
+  top: 0;
+}
+
+.wallet-id {
+  padding: 0.5rem;
+  border-radius: var(--radius);
+  border: 1px solid var(--border-2);
+  background: rgba(246, 254, 249, 0.2);
+}
+
+.wallet-id .flex {
+  font-size: 0.65rem;
+}
+
+.wallet-id .flex svg {
+  height: 0.9rem;
+  width: 0.9rem;
+}
+
+.wallet-id .flex svg path {
+  stroke: var(--primary);
+  stroke-width: 2px;
+}
+
+.transfer-modal .recepients {
+  border: 1px solid var(--border-2);
+  border-radius: var(--radius);
+  grid-template-rows: auto auto 1fr;
+}
+
+.transfer-modal .recepients .search {
+  border: 1px solid var(--border-2);
+  border-radius: calc(var(--radius) * 0.8);
+  grid-template-columns: auto 1fr;
+}
+
+.transfer-modal .recepients .search svg path {
+  stroke: var(--primary);
+}
+
+.transfer-modal .recepients {
+  height: 100%;
+  background-color: #fdfffe;
+}
+
+.recepients .empty {
+  background-color: var(--border);
+  height: 8rem;
+  width: 8rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  margin: auto;
+}
+
+.recepients .empty svg {
+  height: 2rem;
+  width: 2rem;
+}
+.recepients .empty svg path {
+  stroke: var(--primary);
+  stroke-width: 2px;
+}
+
+.recepients input {
+  width: 100%;
+  border: 0;
+  outline: 0;
+}
+
+.modal .user .avatar {
+  height: 2.5rem;
+  width: 2.5rem;
+  background-color: var(--white);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.modal .user * {
+  transition: var(--transition);
+}
+
+.modal .user:hover .name {
+  color: var(--primary);
+}
+.modal .user .wallet {
+  font-size: 0.6rem;
+}
+
+.modal .user:hover .wallet {
+  color: var(--primary);
+}
+
+.modal .user .avatar img {
+  height: 1.9rem;
+  width: auto;
+}

@@ -1,0 +1,46 @@
+.topbar h1 {
+  font-weight: 600;
+  color: var(--primary);
+}
+
+.notification-btn {
+  background-color: var(--pure-white);
+  border: 1px solid var(--border-2);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 2.35rem;
+  width: 2.35rem;
+}
+
+.notification-btn svg {
+  height: 1.2rem;
+  width: 1.2rem;
+}
+
+.profile-btn {
+  background-color: var(--pure-white);
+  border: 1px solid var(--border-2);
+  border-radius: var(--radius);
+  height: 2.35rem;
+  width: 8rem;
+}
+
+.profile-btn span{
+    overflow: hidden;
+    height: 1.8rem;
+    width: 1.8rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 0.35rem;
+    background-color: var(--white);
+}
+
+
+.profile-btn span img{
+  height: 1.15rem;
+  width: 1.15rem;
+  object-fit: contain;
+}
