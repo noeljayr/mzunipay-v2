@@ -24,23 +24,80 @@
   border: 1px solid var(--border-2);
   border-radius: var(--radius);
   height: 2.35rem;
-  width: 8rem;
+  max-width: 15rem;
+  transition: var(--transition);
 }
 
-.profile-btn span{
-    overflow: hidden;
-    height: 1.8rem;
-    width: 1.8rem;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border-radius: 0.35rem;
-    background-color: var(--white);
+.profile-options-active {
+  border-bottom-right-radius: 0;
+  border-bottom-left-radius: 0;
 }
 
+.profile-options {
+  background-color: var(--pure-white);
+  width: 100%;
+  padding: 0.25rem;
+  top: 100%;
+  z-index: 10;
+  left: 0;
+  outline: 1px solid var(--border-2);
+  border-radius: var(--radius);
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+  gap: 0.25rem;
+  transition: var(--transition);
+  height: 2rem;
+  overflow: hidden;
+  top: 0;
+  visibility: hidden;
+  opacity: 0;
+}
 
-.profile-btn span img{
+.profile-options-active .profile-options {
+  top: 100%;
+  visibility: visible;
+  opacity: 1;
+  height: 4.35rem;
+}
+
+.profile-options * {
+  padding: 0.25rem;
+  padding-left: 0.5rem;
+  padding-right: 0.5rem;
+  background-color: var(--border);
+  border-radius: 0.25rem;
+  border: 1px solid var(--border-2);
+}
+
+.profile-btn .profile-icon {
+  overflow: hidden;
+  height: 1.8rem;
+  width: 1.8rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 0.35rem;
+  background-color: var(--white);
+}
+
+/* @media not all and (min-width: 640px) {
+  .profile-btn{
+    display: none;
+  }
+} */
+
+.profile-btn span img {
   height: 1.15rem;
   width: 1.15rem;
   object-fit: contain;
+}
+
+.profile-btn svg {
+  height: 1rem;
+  width: 1rem;
+  transition: var(--transition);
+}
+
+.profile-options-active svg {
+  transform: rotate(180deg);
 }

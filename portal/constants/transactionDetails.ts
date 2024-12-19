@@ -1,0 +1,15 @@
+export const transaction = {
+  _id: "675e8ecf11b680791ca33f75",
+  to_wallet_id: "697540695",
+  reciever_name: "Jane Smith",
+  sender_name: "John Doe",
+  from_wallet_id: "6988540695",
+  amount: 200,
+  description: "Payment for Order #456",
+  status: "Failed",
+  transaction_type: "Payment",
+  created_at: "2024-12-15T08:09:51.517Z",
+  updated_at: "2024-12-15T08:09:51.517Z",
+  tx_id: "00f08e1b-3cbe-43a8-920d-013f2ee237a9",
+  __v: 0,
+};

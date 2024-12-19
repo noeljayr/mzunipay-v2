@@ -7,6 +7,7 @@ const Refund = require("../models/Refund");
 const { apiAuth } = require("../middleware/apiAuth");
 const MerchantCustomerLog = require("../models/MerchantCustomerLog");
 
+
 const saveTransaction = async (
   fromWalletId,
   toWalletId,
@@ -71,11 +72,9 @@ router.post("/deposit", apiAuth, async (req, res) => {
       amount,
       "Deposit",
       "Completed",
-      `Deposit of $${amount}`,
-      "External deposit", // No sender for deposit
-      req.user.account_type === "Merchant"
-        ? "Merchant User"
-        : req.user.full_name // Handle Merchant/Customer differently
+      `Deposit of MWK ${amount}`,
+      "External deposit",
+      req.user.full_name
     );
 
     res.status(200).json({
@@ -121,9 +120,7 @@ router.post("/withdraw", apiAuth, async (req, res) => {
       "Withdrawal",
       "Completed",
       `Withdrawal of $${amount}`,
-      req.user.account_type === "Merchant"
-        ? "Merchant User"
-        : req.user.full_name, // Handle Merchant/Customer differently
+      req.user.full_name, // Handle Merchant/Customer differently
       "External withdrawal" // No receiver for withdrawal
     );
 
@@ -133,6 +130,27 @@ router.post("/withdraw", apiAuth, async (req, res) => {
     });
   } catch (error) {
     console.error("Error processing withdrawal:", error);
+    res.status(500).json({ message: "Server error" });
+  }
+});
+
+router.get("/balance", apiAuth, async (req, res) => {
+  const userId = req.user.user_id; // Access the user ID from the authenticated user
+
+  try {
+    // Fetch the user's wallet
+    const wallet = await Wallet.findOne({ user_id: userId });
+    if (!wallet) {
+      return res.status(404).json({ message: "Wallet not found" });
+    }
+
+    // Respond with the wallet balance
+    res.status(200).json({
+      message: "Wallet balance retrieved successfully",
+      balance: wallet.balance,
+    });
+  } catch (error) {
+    console.error("Error retrieving wallet balance:", error);
     res.status(500).json({ message: "Server error" });
   }
 });

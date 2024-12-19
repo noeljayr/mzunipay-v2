@@ -7,7 +7,7 @@ interface DepositModalState {
 
 
 const useTransferModalStore = create<DepositModalState>((set) => ({
-    transferModalActive: true,
+    transferModalActive: false,
     setTransferModalActive: () => set((state) => ({transferModalActive: !state.transferModalActive})),
 }));
 

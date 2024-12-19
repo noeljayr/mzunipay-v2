@@ -70,6 +70,106 @@ const updateMerchantCustomerLog = async (merchantId, customerId) => {
   }
 };
 
+router.post("/merchant/one-time", apiAuth, async (req, res) => {
+  const { customer_email, password, amount, description } = req.body;
+
+  try {
+    // Validate input
+    if (!description) {
+      return res.status(400).json({ message: "Description is required" });
+    }
+
+    // Get the merchant_user_id from the validated API key
+    const merchantUserId = req.merchant_user_id;
+
+    // Find the customer by email
+    const customer = await User.findOne({ email: customer_email });
+    if (!customer || customer.account_type !== "Customer") {
+      return res.status(404).json({ message: "Customer not found" });
+    }
+
+    // Verify the customer's password
+    const isPasswordValid = await bcrypt.compare(password, customer.password);
+    if (!isPasswordValid) {
+      // Save the failed transaction
+      await saveTransaction(
+        null,
+        null,
+        amount,
+        "Payment",
+        "Failed",
+        description,
+        customer ? `${customer.first_name} ${customer.last_name}` : null,
+        req.merchant_name
+      );
+      return res.status(401).json({ message: "Invalid customer credentials" });
+    }
+
+    // Fetch wallets for both the customer and merchant
+    const customerWallet = await Wallet.findOne({ user_id: customer.user_id });
+    const merchantWallet = await Wallet.findOne({ user_id: merchantUserId });
+
+    if (!customerWallet || !merchantWallet) {
+      return res
+        .status(500)
+        .json({ message: "Wallets not found for customer or merchant" });
+    }
+
+    // Check if the customer has sufficient balance
+    if (customerWallet.balance < amount) {
+      // Save the failed transaction
+      await saveTransaction(
+        customerWallet.wallet_id,
+        merchantWallet.wallet_id,
+        amount,
+        "Payment",
+        "Failed",
+        description,
+        `${customer.first_name} ${customer.last_name}`,
+        req.merchant_name
+      );
+      return res.status(400).json({ message: "Insufficient balance" });
+    }
+
+    // Process the transaction
+    customerWallet.balance -= amount;
+    merchantWallet.balance += amount;
+
+    await customerWallet.save();
+    await merchantWallet.save();
+
+    // Get full names of customer and merchant
+    const senderName = `${customer.first_name} ${customer.last_name}`;
+    const receiverName = await getUserFullName(merchantUserId);
+
+    // Save the successful transaction
+    const transaction = await saveTransaction(
+      customerWallet.wallet_id,
+      merchantWallet.wallet_id,
+      amount,
+      "Payment",
+      "Completed",
+      description,
+      senderName,
+      receiverName
+    );
+
+    if (transaction.status === "Completed") {
+      await updateMerchantCustomerLog(merchantUserId, customer.user_id);
+    }
+
+    res.status(200).json({
+      message: "Transaction completed successfully",
+      transaction,
+    });
+  } catch (error) {
+    console.error("Error processing transaction:", error);
+    res.status(500).json({ message: "Server error" });
+  }
+});
+
+
+
 router.post("/transfer", apiAuth, async (req, res) => {
   const { sender_wallet_id, receiver_identifier, amount, description } =
     req.body;
@@ -176,7 +276,9 @@ router.get("/", apiAuth, async (req, res) => {
     sort_by = "created_at",
     sort_order = "desc",
     search,
+    type, // Optional parameter to filter by transaction type
   } = req.query;
+
   const pageNumber = parseInt(page, 10) || 1; // Default to page 1
   const pageSize = parseInt(limit, 10) || 10; // Default to 10 transactions per page
   const sortOrder = sort_order.toLowerCase() === "asc" ? 1 : -1; // Sort order: ascending or descending
@@ -185,8 +287,9 @@ router.get("/", apiAuth, async (req, res) => {
     let walletId;
     let filter = {};
 
+    // Restrict access based on user type
     if (req.user && req.user.account_type !== "Admin") {
-      // If authenticated as a customer or merchant (non-admin)
+      // For customers or merchants
       const userWallet = await Wallet.findOne({ user_id: req.user.user_id });
       if (!userWallet) {
         return res.status(404).json({ message: "Wallet not found for user" });
@@ -198,7 +301,7 @@ router.get("/", apiAuth, async (req, res) => {
         $or: [{ to_wallet_id: walletId }, { from_wallet_id: walletId }],
       };
     } else if (req.user && req.user.account_type === "Admin") {
-      // Admin can see all transactions, no wallet filter needed
+      // Admin can see all transactions
       filter = {};
     } else {
       return res
@@ -208,9 +311,9 @@ router.get("/", apiAuth, async (req, res) => {
 
     // Apply search filters
     if (search) {
+      
       const searchRegex = new RegExp(search, "i");
 
-      // Fetch the user's full name to disregard their name in search
       let userFullName = "";
       if (req.user && req.user.account_type !== "Admin") {
         const user = await User.findOne({ user_id: req.user.user_id });
@@ -222,19 +325,36 @@ router.get("/", apiAuth, async (req, res) => {
         { receiver_name: { $regex: searchRegex, $ne: userFullName } },
       ];
 
-      // Add numeric search for amount, only if `search` is a number
       const parsedAmount = parseFloat(search);
       if (!isNaN(parsedAmount)) {
         searchFilters.push({ amount: parsedAmount });
       }
 
-      // Merge existing $or filter with search filters
       if (filter.$or) {
         filter.$and = [{ $or: filter.$or }, { $or: searchFilters }];
-        delete filter.$or; // Clean up top-level $or
+        delete filter.$or;
       } else {
         filter.$or = searchFilters;
       }
+    }
+
+    // Apply filter for transaction type if provided
+    if (type) {
+      const allowedTypes = [
+        "Payment",
+        "Refund",
+        "Peer-to-Peer",
+        "Withdrawal",
+        "Deposit",
+      ];
+
+      if (!allowedTypes.includes(type)) {
+        return res
+          .status(400)
+          .json({ message: "Invalid transaction type provided" });
+      }
+
+      filter.transaction_type = type;
     }
 
     console.log("Transaction filter applied:", filter);
@@ -259,6 +379,43 @@ router.get("/", apiAuth, async (req, res) => {
     });
   } catch (error) {
     console.error("Error fetching user transactions:", error);
+    return res.status(500).json({ message: "Server error" });
+  }
+});
+
+router.get("/:tx_id", apiAuth, async (req, res) => {
+  const { tx_id } = req.params;
+
+  try {
+    // Fetch the transaction by transaction ID
+    const transaction = await Transaction.findOne({ tx_id });
+
+    // Check if the transaction exists
+    if (!transaction) {
+      return res.status(404).json({ message: "Transaction not found" });
+    }
+
+    // If the user is not an admin, ensure they have access to the transaction
+    if (req.user && req.user.account_type !== "Admin") {
+      // Find the user's wallet
+      const userWallet = await Wallet.findOne({ user_id: req.user.user_id });
+      if (!userWallet) {
+        return res.status(404).json({ message: "Wallet not found for user" });
+      }
+
+      const walletId = userWallet.wallet_id;
+
+      // Ensure the transaction involves the user's wallet
+      
+    }
+
+    // Return the transaction details
+    return res.status(200).json({
+      message: "Transaction details fetched successfully",
+      transaction,
+    });
+  } catch (error) {
+    console.error("Error fetching transaction details:", error);
     return res.status(500).json({ message: "Server error" });
   }
 });

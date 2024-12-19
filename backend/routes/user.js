@@ -7,7 +7,7 @@ const MerchantAPI = require("../models/MerchantAPI");
 const router = express.Router();
 const { v4: uuidv4 } = require("uuid");
 const NodeCache = require("node-cache");
-const cache = new NodeCache({ stdTTL: 300 })
+const cache = new NodeCache({ stdTTL: 300 });
 
 const avatars = [
   "bee",
@@ -55,14 +55,17 @@ router.post("/login", async (req, res) => {
     }
 
     // Create JWT Token
+
     const payload = {
       user_id: user.user_id,
       account_type: user.account_type,
-      wallet_id: wallet.wallet_id, // Add wallet_id to the token payload
+      wallet_id: wallet.wallet_id, 
+      full_name:  user.first_name + " " + user.last_name,
+      avatar: user.avatar
     };
 
     const token = jwt.sign(payload, process.env.JWT_SECRET, {
-      expiresIn: "1h",
+      expiresIn: "1232320h",
     });
 
     res.status(200).json({ token });
@@ -120,7 +123,7 @@ router.post("/signup", async (req, res) => {
       await newApi.save();
     }
 
-    res.status(201).json({ message: "User registered successfully" });
+    res.status(201).json({ message: "Welcome to MzuniPay!" });
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: "Server error" });
@@ -281,7 +284,9 @@ router.get("/", async (req, res) => {
 
     // Ensure a query parameter is provided
     if (!query) {
-      return res.status(400).json({ message: "Please provide a query parameter" });
+      return res
+        .status(400)
+        .json({ message: "Please provide a query parameter" });
     }
 
     const cacheKey = `users_${query}_page_${page}`;
@@ -321,7 +326,10 @@ router.get("/", async (req, res) => {
     const totalPages = Math.ceil(totalUsers / pageSize);
     const currentPage = Math.max(1, Math.min(page, totalPages)); // Ensure valid page number
 
-    const paginatedUsers = users.slice((currentPage - 1) * pageSize, currentPage * pageSize);
+    const paginatedUsers = users.slice(
+      (currentPage - 1) * pageSize,
+      currentPage * pageSize
+    );
 
     // Fetch wallet information for each user
     const userWithWallets = await Promise.all(
@@ -329,6 +337,7 @@ router.get("/", async (req, res) => {
         const wallet = await Wallet.findOne({ user_id: user.user_id });
         return {
           user: {
+            user_id: user.user_id,
             first_name: user.first_name,
             last_name: user.last_name,
             email: user.email,

@@ -1,0 +1,51 @@
+.bottombar {
+  background-color: var(--pure-white);
+  border-top: 1px solid var(--border-2);
+  width: 100vw;
+  padding: 1rem;
+}
+
+@media not all and (max-width: 640px) {
+  .bottombar{
+    display: none;
+  }
+}
+
+
+
+.bottombar a {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.45rem;
+}
+
+.bottombar svg {
+  height: 1.5rem;
+  width: 1.5rem;
+}
+
+.bottombar .active-link {
+  color: var(--primary);
+  font-weight: 500;
+}
+
+.bottombar .active-link svg path {
+  stroke: var(--primary);
+  stroke-width: 2px;
+}
+
+.bottombar .profile-icon {
+  height: 3rem;
+  width: 3rem;
+  background-color: var(--white);
+  border-radius: 50%;
+  align-items: center;
+  justify-content: center;
+}
+
+.bottombar .profile-icon img {
+  width: 1.5rem;
+  height: auto;
+}
