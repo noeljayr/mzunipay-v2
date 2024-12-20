@@ -132,6 +132,7 @@ router.post("/signup", async (req, res) => {
 
 // Upgrade Customer to Merchant
 router.post("/upgrade-to-merchant", async (req, res) => {
+  
   const { user_id } = req.body;
 
   try {

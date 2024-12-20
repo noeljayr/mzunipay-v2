@@ -13,6 +13,7 @@ import { useEffect, useState } from "react";
 import { getCookie, setCookie } from "cookies-next/client";
 import { BASE_URL } from "@/constants/constants";
 import { formatDistanceToNow } from "date-fns";
+import useBalanceChangeState from "@/states/balanceChangeStore";
 
 function TotalBalance() {
   const token = getCookie("token");
@@ -22,6 +23,7 @@ function TotalBalance() {
   const [balance, setBalance] = useState<number>(0);
   const [refresh, setRefresh] = useState(false);
   const [relativeTime, setRelativeTime] = useState<string>("");
+  const { balanceChangeState } = useBalanceChangeState();
 
   const updateBalance = () => {
     const currentDate = new Date();
@@ -30,8 +32,6 @@ function TotalBalance() {
 
   useEffect(() => {
     const fetchBalance = async () => {
-     
-
       try {
         const response = await fetch(`${BASE_URL}/wallets/balance`, {
           method: "GET",
@@ -44,21 +44,20 @@ function TotalBalance() {
         const data = await response.json();
 
         if (response.ok) {
-          
           setBalance(data.balance);
           updateBalance(); // Update last fetched timestamp
         } else {
-          console.log("error")
+          console.log("error");
         }
       } catch (error) {
-        console.log(error)
+        console.log(error);
       } finally {
-       console.log("")
+        console.log("");
       }
     };
 
     fetchBalance();
-  }, [refresh]);
+  }, [refresh, balanceChangeState]);
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -74,9 +73,9 @@ function TotalBalance() {
   }, []);
 
   return (
-    <div className="flex flex-col gap-1 h-full total-balance overflow-hidden">
+    <div className="flex flex-col gap-1 h-full total-balance">
       <div className="content-container h-full overview-metric flex flex-col gap-2">
-        <h3 className="opacity-70">Total Balance</h3>
+        <h3 className="opacity-70">Balance</h3>
 
         <h1 className="mb-2 mt-auto ml-2 truncate flex items-center gap-1">
           K{" "}

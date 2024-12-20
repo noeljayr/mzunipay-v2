@@ -5,7 +5,7 @@ import LoadingLight from "../ux/LoadingLight";
 import useDepositModalStore from "@/states/depositModalStore";
 import NumberFlow from "@number-flow/react";
 import { BASE_URL } from "@/constants/constants";
-
+import useBalanceChangeState from "@/states/balanceChangeStore";
 import { getCookie } from "cookies-next/client";
 import Loading from "../ux/Loading";
 import Error from "../ux/Error";
@@ -26,6 +26,7 @@ function Deposit() {
   const [amount, setAmount] = useState("");
   const [projectedBalance, setProjectedBalance] = useState(balance);
   const [floatAmount, setFloatAmount] = useState<number>(0);
+  const {setBalanceState} = useBalanceChangeState()
 
   const handleAmountChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     // Clean and format the raw input
@@ -87,6 +88,7 @@ function Deposit() {
         setStatusMessage(data.message);
         setFailed(false);
         setSuccess(true);
+        setBalanceState()
       } else {
         setShowMessage(true);
         setStatusMessage(data.message);

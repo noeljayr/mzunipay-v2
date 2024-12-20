@@ -28,6 +28,12 @@
   transition: var(--transition);
 }
 
+@media not all and (min-width: 640px) {
+  .profile-btn{
+    display: none;
+  }
+}
+
 .profile-options-active {
   border-bottom-right-radius: 0;
   border-bottom-left-radius: 0;

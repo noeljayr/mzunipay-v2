@@ -168,11 +168,9 @@ router.post("/merchant/one-time", apiAuth, async (req, res) => {
   }
 });
 
-
-
 router.post("/transfer", apiAuth, async (req, res) => {
-  const { sender_wallet_id, receiver_identifier, amount, description } =
-    req.body;
+  const { receiver_identifier, amount, description } = req.body;
+  const sender_wallet_id = req.user.wallet_id;
 
   try {
     // Validate input
@@ -189,6 +187,7 @@ router.post("/transfer", apiAuth, async (req, res) => {
 
     // Fetch receiver's wallet and user by wallet ID or email
     let receiverWallet, receiverUser;
+    let senderUser
     let receiverName = null;
     if (receiver_identifier.includes("@")) {
       receiverUser = await User.findOne({ email: receiver_identifier });
@@ -196,6 +195,7 @@ router.post("/transfer", apiAuth, async (req, res) => {
         return res.status(404).json({ message: "Receiver not found" });
       }
       receiverWallet = await Wallet.findOne({ user_id: receiverUser.user_id });
+     
       receiverName = await getUserFullName(receiverUser.user_id);
     } else {
       receiverWallet = await Wallet.findOne({ wallet_id: receiver_identifier });
@@ -237,6 +237,7 @@ router.post("/transfer", apiAuth, async (req, res) => {
       await receiverWallet.save({ session });
 
       // Save successful transaction
+      
       const transaction = await saveTransaction(
         senderWallet.wallet_id,
         receiverWallet.wallet_id,
@@ -245,7 +246,7 @@ router.post("/transfer", apiAuth, async (req, res) => {
         "Completed",
         description,
         senderName,
-        receiverName
+        receiverName = receiverUser.first_name + " " + receiverUser.last_name
       );
 
       // Commit transaction
@@ -311,7 +312,6 @@ router.get("/", apiAuth, async (req, res) => {
 
     // Apply search filters
     if (search) {
-      
       const searchRegex = new RegExp(search, "i");
 
       let userFullName = "";
@@ -406,7 +406,6 @@ router.get("/:tx_id", apiAuth, async (req, res) => {
       const walletId = userWallet.wallet_id;
 
       // Ensure the transaction involves the user's wallet
-      
     }
 
     // Return the transaction details

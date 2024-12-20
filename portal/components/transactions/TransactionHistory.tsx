@@ -8,6 +8,7 @@ import TableRowLoading from "@/components/ux/TableRowLoading";
 import Error from "@/components/ux/Error";
 import { useCookies } from "next-client-cookies";
 import { BASE_URL } from "@/constants/constants";
+import useBalanceChangeState from "@/states/balanceChangeStore";
 
 type TransactionProps = {
   to_wallet_id: string;
@@ -29,6 +30,7 @@ function TransactionHistory() {
   const cookies = useCookies();
   const token = cookies.get("token");
   const [transactions, setTransactions] = useState<TransactionProps[]>([]);
+  const {balanceChangeState} = useBalanceChangeState()
   
 
   useEffect(() => {
@@ -67,7 +69,7 @@ function TransactionHistory() {
     };
 
     fetchTransactions();
-  }, [refresh]);
+  }, [refresh, balanceChangeState]);
 
   return (
     <div className="content-container transaction-history grid gap-2">

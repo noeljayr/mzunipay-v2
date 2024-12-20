@@ -182,7 +182,7 @@ router.post("/one-time", apiAuth, async (req, res) => {
 
 router.get("/metrics/customers", apiAuth, async (req, res) => {
   const { period } = req.query; // e.g., "week", "month", "year"
-  const merchantId = req.merchant_user_id;
+  const merchantId = req.user.user_id;
 
   try {
     const now = new Date();
@@ -274,7 +274,8 @@ router.get("/metrics/customers", apiAuth, async (req, res) => {
 
 router.get("/metrics/refunds", apiAuth, async (req, res) => {
   const { period } = req.query; // e.g., "week", "month", "year"
-  const merchantId = req.merchant_user_id;
+  const merchantId = req.user.user_id; // Ensure this is the unique identifier for the merchant
+
 
   try {
     const now = new Date();
@@ -292,11 +293,10 @@ router.get("/metrics/refunds", apiAuth, async (req, res) => {
       return res.status(400).json({ message: "Invalid period specified" });
     }
 
-    // Fetch all refunds within the current period for the merchant
+    // Fetch all refunds within the current period for the specific merchant
     const refunds = await Transaction.find({
       transaction_type: "Refund",
-      from_wallet_id: { $exists: true }, // Ensures it's a wallet transaction
-      to_wallet_id: { $exists: true },
+      from_wallet_id: merchantId, // Ensure refunds are associated with the merchant
       created_at: { $gte: startDate }, // Only transactions within the specified timeframe
     });
 
@@ -331,8 +331,7 @@ router.get("/metrics/refunds", apiAuth, async (req, res) => {
 
     const previousRefunds = await Transaction.find({
       transaction_type: "Refund",
-      from_wallet_id: { $exists: true },
-      to_wallet_id: { $exists: true },
+      from_wallet_id: merchantId, // Ensure refunds are associated with the merchant
       created_at: { $gte: previousStartDate, $lte: previousEndDate }, // Only transactions in the previous period
     });
 
@@ -366,9 +365,11 @@ router.get("/metrics/refunds", apiAuth, async (req, res) => {
   }
 });
 
+
 router.get("/metrics/revenue", apiAuth, async (req, res) => {
   const { period } = req.query; // e.g., "week", "month", "year"
-  const merchantId = req.merchant_user_id;
+  const merchantId = req.user.user_id; // Ensure this is the unique identifier for the merchant
+  
 
   try {
     const now = new Date();
@@ -386,12 +387,11 @@ router.get("/metrics/revenue", apiAuth, async (req, res) => {
       return res.status(400).json({ message: "Invalid period specified" });
     }
 
-    // Fetch all completed payment transactions within the current period where the merchant is the recipient
+    // Fetch all completed payment transactions within the current period for the specific merchant
     const transactions = await Transaction.find({
       transaction_type: "Payment",
       status: "Completed",
-      to_wallet_id: { $exists: true }, // Ensures the transaction has a valid recipient wallet
-      reciever_name: { $exists: true }, // Only transactions with a recipient name
+      to_wallet_id: merchantId, // Ensure only transactions belonging to this merchant
       created_at: { $gte: startDate }, // Only transactions within the specified timeframe
     });
 
@@ -427,8 +427,7 @@ router.get("/metrics/revenue", apiAuth, async (req, res) => {
     const previousTransactions = await Transaction.find({
       transaction_type: "Payment",
       status: "Completed",
-      to_wallet_id: { $exists: true },
-      reciever_name: { $exists: true },
+      to_wallet_id: merchantId, // Ensure only transactions belonging to this merchant
       created_at: { $gte: previousStartDate, $lte: previousEndDate },
     });
 
@@ -461,5 +460,6 @@ router.get("/metrics/revenue", apiAuth, async (req, res) => {
     res.status(500).json({ message: "Server error" });
   }
 });
+
 
 module.exports = router;

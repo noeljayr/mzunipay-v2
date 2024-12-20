@@ -2,7 +2,6 @@
 
 import Link from "next/link";
 import {
-  IconBuildingStore,
   IconHome,
   IconSwitchVertical,
   IconCode,
@@ -12,6 +11,7 @@ import { usePathname } from "next/navigation";
 
 import { getCookie } from "cookies-next/client";
 import { jwtDecode } from "jwt-decode";
+import UpgradeCustomer from "../UpgradeCustomer";
 
 type TokenTypes = {
   user_id: string;
@@ -96,20 +96,7 @@ function SideBar() {
         {user.account_type == "Merchant" ? (
           <></>
         ) : (
-          <div className="upgrade-to-merchant mb-4 flex gap-1 mt-auto flex-col p-2 py-3 items-center">
-            <span className="merchant-icon">
-              <IconBuildingStore />
-            </span>
-
-            <h3>Business account</h3>
-
-            <p>
-              Upgrade to a business account and start accepting payments on your
-              e-commerce platforms.
-            </p>
-
-            <button>Upgrade</button>
-          </div>
+         <UpgradeCustomer />
         )}
       </div>
     );

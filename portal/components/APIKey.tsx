@@ -9,7 +9,11 @@ import { formatDate } from "@/utils/formatDate";
 import { useState, useEffect } from "react";
 import NumberFlow from "@number-flow/react";
 import Loading from "./ux/Loading";
+import { getCookie } from "cookies-next/client";
+import { BASE_URL } from "@/constants/constants";
+
 type apiTypes = {
+  api_key_id: string;
   api_key: string;
   status: string;
   created_at: string;
@@ -20,11 +24,14 @@ function APIKey(props: apiTypes) {
   const [optionsactive, setOptions] = useState(false);
   const [countdown, setCountdown] = useState(7);
   const [isActive, setIsActive] = useState(false);
-  const [isDeleted, setIsDelete] = useState(false);
+  const [isDeleted, setIsDeleted] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [isError, setError] = useState(false);
   const [isCancelled, setIsCancelled] = useState(false);
-  const [deletAPIKey, setDeleteAPI] = useState(false);
+  const [deleteAPIKey, setDeleteAPI] = useState(false);
+  const [toDeleteId, setTodeleteId] = useState("");
+  const [refresh, setRefresh] = useState(false);
+  const token = getCookie("token");
 
   useEffect(() => {
     if (!isActive) return;
@@ -74,7 +81,39 @@ function APIKey(props: apiTypes) {
     setIsActive(false); // Stop the countdown
   };
 
-  function deleteAPIKeyRequest() {}
+  const deleteAPIKeyRequest = async () => {
+    setIsLoading(true);
+    setIsDeleted(false);
+    setError(false);
+    try {
+      const response = await fetch(
+        `${BASE_URL}/api-keys/delete/${toDeleteId}`,
+        {
+          method: "DELETE",
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json",
+          },
+        }
+      );
+
+      if (!response.ok) {
+        setError(true);
+        return;
+      }
+      if (response.ok) {
+        setIsDeleted(false);
+      }
+
+      // If the response is successful, refresh the list by toggling refresh
+      setRefresh((prev) => !prev);
+    } catch (e: any) {
+      console.error("API Key deletion Error:", e);
+      setError(true);
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
   function setActiveAPI() {}
 
@@ -108,7 +147,12 @@ function APIKey(props: apiTypes) {
           {copied ? (
             <IconCheck className="copy-icon cursor-pointer" />
           ) : (
-            <IconCopy onClick={()=>{handleCopy(props.api_key)}} className="cursor-pointer copy-icon" />
+            <IconCopy
+              onClick={() => {
+                handleCopy(props.api_key);
+              }}
+              className="cursor-pointer copy-icon"
+            />
           )}
           <IconDots
             onClick={() => {
@@ -125,6 +169,7 @@ function APIKey(props: apiTypes) {
               onClick={() => {
                 setOptions(false);
                 TriggerDelete();
+                setTodeleteId(props.api_key_id);
               }}
               className={
                 props.status === "Active"
@@ -152,14 +197,14 @@ function APIKey(props: apiTypes) {
         </span>
       </div>
 
-      {deletAPIKey && (
+      {deleteAPIKey && (
         <div className="delete-notification">
           {isLoading ? (
             <Loading />
           ) : isError ? (
             "Something went wrong"
           ) : isDeleted ? (
-            <span className="success">Account Deleted</span>
+            <span className="success">API Deleted</span>
           ) : (
             <>
               <span>Deleting an API key can{`'`}t be undone</span>

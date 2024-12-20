@@ -41,9 +41,6 @@ router.get("/", async (req, res) => {
   }
 });
 
-
-
-
 // Revoke an API Key
 router.put("/revoke/:api_key_id", async (req, res) => {
   try {
@@ -60,12 +57,17 @@ router.put("/revoke/:api_key_id", async (req, res) => {
     // Verify the user is a merchant
     const user = await User.findOne({ user_id });
     if (!user || user.account_type !== "Merchant") {
-      return res.status(403).json({ message: "Only merchants can perform this action" });
+      return res
+        .status(403)
+        .json({ message: "Only merchants can perform this action" });
     }
 
     // Revoke the API key
     const { api_key_id } = req.params;
-    const apiKey = await MerchantAPI.findOne({ api_key_id, merchant_user_id: user_id });
+    const apiKey = await MerchantAPI.findOne({
+      api_key_id,
+      merchant_user_id: user_id,
+    });
 
     if (!apiKey) {
       return res.status(404).json({ message: "API key not found" });
@@ -101,18 +103,29 @@ router.post("/create", async (req, res) => {
     // Verify the user is a merchant
     const user = await User.findOne({ user_id });
     if (!user || user.account_type !== "Merchant") {
-      return res.status(403).json({ message: "Only merchants can perform this action" });
+      return res
+        .status(403)
+        .json({ message: "Only merchants can perform this action" });
     }
+
+    // Revoke any existing active API keys for this merchant
+    await MerchantAPI.updateMany(
+      { merchant_user_id: user_id, status: "Active" },
+      { $set: { status: "Revoked", updated_at: new Date() } }
+    );
 
     // Create a new API key
     const newApiKey = new MerchantAPI({
       merchant_user_id: user_id,
       api_key: uuidv4(),
+      status: "Active",
     });
 
     await newApiKey.save();
 
-    res.status(201).json({ message: "New API key created successfully", apiKey: newApiKey });
+    res
+      .status(201)
+      .json({ message: "New API key created successfully", apiKey: newApiKey });
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: "Server error" });
@@ -135,13 +148,18 @@ router.put("/activate/:api_key_id", async (req, res) => {
     // Verify the user is a merchant
     const user = await User.findOne({ user_id });
     if (!user || user.account_type !== "Merchant") {
-      return res.status(403).json({ message: "Only merchants can perform this action" });
+      return res
+        .status(403)
+        .json({ message: "Only merchants can perform this action" });
     }
 
     const { api_key_id } = req.params;
 
     // Find the API key to activate
-    const apiKeyToActivate = await MerchantAPI.findOne({ api_key_id, merchant_user_id: user_id });
+    const apiKeyToActivate = await MerchantAPI.findOne({
+      api_key_id,
+      merchant_user_id: user_id,
+    });
 
     if (!apiKeyToActivate) {
       return res.status(404).json({ message: "API key not found" });
@@ -184,12 +202,17 @@ router.delete("/delete/:api_key_id", async (req, res) => {
     // Verify the user is a merchant
     const user = await User.findOne({ user_id });
     if (!user || user.account_type !== "Merchant") {
-      return res.status(403).json({ message: "Only merchants can perform this action" });
+      return res
+        .status(403)
+        .json({ message: "Only merchants can perform this action" });
     }
 
     // Find and delete the API key
     const { api_key_id } = req.params;
-    const apiKey = await MerchantAPI.findOneAndDelete({ api_key_id, merchant_user_id: user_id });
+    const apiKey = await MerchantAPI.findOneAndDelete({
+      api_key_id,
+      merchant_user_id: user_id,
+    });
 
     if (!apiKey) {
       return res.status(404).json({ message: "API key not found" });
@@ -201,6 +224,5 @@ router.delete("/delete/:api_key_id", async (req, res) => {
     res.status(500).json({ message: "Server error" });
   }
 });
-
 
 module.exports = router;

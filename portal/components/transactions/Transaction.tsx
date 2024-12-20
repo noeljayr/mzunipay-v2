@@ -93,7 +93,7 @@ function Transaction(props: TransactionProps) {
                 ? ""
                 : props.transaction_type === "Peer-to-Peer"
                 ? props.to_wallet_id === user.wallet_id
-                  ? props.from_wallet_id
+                  ? props.sender_name
                   : props.reciever_name
                 : ""}
             </span>
