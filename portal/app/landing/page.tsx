@@ -20,7 +20,7 @@ function Overview() {
               simple , and built for Mzuzu University students
             </p>
 
-            <Link href="/landing/signup" className="cta">
+            <Link href="/landing/dev" className="cta">
               Get started
               <IconChevronRight />
             </Link>
@@ -119,8 +119,6 @@ function Overview() {
           </div>
           <div className="video"></div>
         </div>
-
-
       </div>
     </div>
   );

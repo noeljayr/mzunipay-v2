@@ -17,6 +17,73 @@
   background-color: var(--light);
   z-index: 10;
 }
+
+.overlay {
+  background-color: var(--border);
+  height: 100vh;
+  width: 100vw;
+  position: fixed;
+  z-index: 4;
+  backdrop-filter: blur(2px);
+  left: 0;
+  top: 0;
+}
+
+.landing-m-menu {
+  background-color: var(--light);
+  border-left: 1px solid var(--border-2);
+  height: 100vh;
+  position: fixed;
+  z-index: 5;
+  right: 0;
+  padding-top: 5rem;
+  padding-left: 1rem;
+  width: 0;
+  overflow: hidden;
+  opacity: 0;
+  visibility: hidden;
+  transition: var(--transition);
+}
+
+.landing-m-menu-active{
+  visibility: visible;
+  opacity: 1;
+  width: 8rem;
+}
+
+.landin-nav .nav-menu {
+  display: none;
+}
+
+@media not all and (min-width: 640px) {
+  .landin-nav .links {
+    display: none;
+  }
+  .landin-nav .cta-container {
+    margin-left: auto;
+    margin-right: 1rem;
+  }
+  .landin-nav .cta-2 {
+    display: none;
+  }
+
+  .landin-nav .nav-menu {
+    background-color: var(--pure-white);
+    width: 2.35rem;
+    height: 2.35rem;
+    border-radius: var(--radius);
+    border: 1px solid var(--border-2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .landin-nav .nav-menu svg {
+    height: 1rem;
+    width: 1rem;
+  }
+}
+
 .landin-nav h1 {
   font-weight: 600;
   color: var(--primary);
@@ -134,7 +201,7 @@
   justify-content: center;
 }
 
-.first-last{
+.first-last {
   grid-template-columns: 1fr 1fr;
 }
 
@@ -152,7 +219,6 @@
   width: 20rem;
 }
 
-
 @media not all and (min-width: 640px) {
   .login-signup-form {
     width: calc(100% - 6rem);
@@ -164,7 +230,6 @@
     width: calc(100% - 4rem);
   }
 }
-
 
 .login-signup-form input::placeholder {
   font-weight: 500;
@@ -323,8 +388,6 @@
   gap: 0.5rem;
 }
 
-
-
 .features .ft {
   display: grid;
   grid-template-columns: 33% 1fr;
@@ -332,13 +395,11 @@
   gap: 0.5rem;
 }
 
-
-
-.features .ft:nth-child(2){
+.features .ft:nth-child(2) {
   grid-template-columns: 1fr 33%;
 }
 
-.features .ft div{
+.features .ft div {
   background-color: var(--border);
   display: flex;
   justify-content: center;
@@ -346,10 +407,9 @@
   border-radius: 0.6rem;
 }
 
-.features .ft .text{
+.features .ft .text {
   padding: 1rem;
 }
-
 
 @media not all and (min-width: 640px) {
   .features {
@@ -357,7 +417,7 @@
     gap: 3rem;
   }
 
-  .features .video{
+  .features .video {
     height: 20rem;
     width: 100%;
   }
@@ -366,7 +426,7 @@
     flex-direction: column;
     height: fit-content;
   }
-  .features .ft:nth-child(2){
+  .features .ft:nth-child(2) {
     flex-direction: column-reverse;
   }
 }

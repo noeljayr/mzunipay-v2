@@ -1,5 +1,6 @@
 const jwt = require("jsonwebtoken");
 const MerchantAPI = require("../models/MerchantAPI");
+const User = require("../models/User");
 
 const apiAuth = async (req, res, next) => {
   const authHeader = req.headers["authorization"];
@@ -12,6 +13,10 @@ const apiAuth = async (req, res, next) => {
         api_key: apiKey,
         status: "Active",
       });
+
+      const merchantUser = await User.findOne({
+        user_id: merchantAPI.merchant_user_id
+      })
       if (!merchantAPI) {
         console.log("Invalid or inactive API key");
         return res.status(401).json({ message: "Invalid or inactive API key" });
@@ -21,6 +26,7 @@ const apiAuth = async (req, res, next) => {
       req.user = {
         user_id: merchantAPI.merchant_user_id,
         account_type: "Merchant",
+        merchant_name: merchantUser.first_name + " " + merchantUser.last_name
       };
       console.log("Merchant user identified:", req.user);
       return next();

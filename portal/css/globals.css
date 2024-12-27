@@ -87,6 +87,10 @@ h4 {
 p {
   line-height: 180%;
 }
+
+ul li {
+  line-height: 180%;
+}
 a {
   text-decoration: none;
   /* font-weight: 300 !important; */

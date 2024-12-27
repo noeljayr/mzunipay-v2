@@ -1,12 +1,10 @@
 "use client";
 
-import MzuniPay from "mzunipay-sdk-package";
+import MzuniPay from "mzunipay-sdk";
 import { useEffect, useState } from "react";
 
 function page() {
-  const [apiKey] = useState(
-    "64276172f803193f6dfbab16e29a4fd97fc3e6c592634053a460dd32f4f6b958"
-  );
+  const [apiKey] = useState("29b1241e-3e81-414e-aad4-e38ec6382900");
 
   const handleSuccess = (response: any) => {
     console.log("Payment Successful!", response);
@@ -18,18 +16,10 @@ function page() {
 
   useEffect(() => {
     const payment = new MzuniPay(apiKey);
-    payment.renderForm(
+    payment.renderPlainForm(
       "paymentFormContainer", // ID of the container where the form will be mounted
       (response) => console.log("Payment Success:", response), // Success callback
-      (error) => console.error("Payment Error:", error), // Error callback
-      {
-        buttonText: "Make Payment", 
-        styles: {
-          button: {
-            backgroundColor: "#28a745",
-          }
-        }
-      }
+      (error) => console.error("Payment Error:", error) // Error callback
     );
   }, [apiKey]);
 

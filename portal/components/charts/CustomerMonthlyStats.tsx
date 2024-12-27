@@ -1,4 +1,6 @@
 "use client";
+
+import React, { useEffect, useState } from "react";
 import { Line } from "react-chartjs-2";
 import {
   Chart as ChartJS,
@@ -10,6 +12,9 @@ import {
   Tooltip,
   Legend,
 } from "chart.js";
+import { getCookie } from "cookies-next/client";
+import { jwtDecode } from "jwt-decode";
+import axios from "axios";
 
 // Register required Chart.js components
 ChartJS.register(
@@ -22,47 +27,103 @@ ChartJS.register(
   Legend
 );
 
+type TokenTypes = {
+  user_id: string;
+  account_type: string;
+  wallet_id: string;
+  full_name: string;
+  avatar: string;
+};
+
 function CustomerMonthlyStats() {
-  const data: any = {
-    labels: [
-      "Jan",
-      "Feb",
-      "Mar",
-      "Apr",
-      "May",
-      "Jun",
-      "Jul",
-      "Aug",
-      "Sep",
-      "Oct",
-      "Nov",
-      "Dec",
-    ],
-    datasets: [
-      {
-        label: "Dataset 1",
-        data: [
-          40000, 65000, 55000, 60000, 50000, 58000, 42000, 54000, 65000, 63000,
-          60000, 45000,
-        ],
-        borderColor: "#129549",
-        borderWidth: 2,
-        backgroundColor: "#129549",
-        tension: 0.3,
-      },
-      {
-        label: "Dataset 2",
-        data: [
-          42000, 53000, 60000, 55000, 58000, 45000, 62000, 50000, 56000, 61000,
-          57000, 40000,
-        ],
-        borderColor: "#FF6666",
-        borderWidth: 2,
-        backgroundColor: "#FF6666",
-        tension: 0.3,
-      },
-    ],
-  };
+  const [chartData, setChartData] = useState<any>(null); // State to hold chart data
+  const [loading, setLoading] = useState<boolean>(true);
+
+  const token = getCookie("token");
+  const user: TokenTypes = jwtDecode(token || "");
+
+  const wallet_id = user.wallet_id;
+
+  useEffect(() => {
+    // Fetch transaction data
+    const fetchTransactions = async () => {
+      try {
+        const response = await axios.get(
+          "http://localhost:5000/api/transactions",
+          {
+            headers: {
+              Authorization: `Bearer ${token}`, // Pass the token in the request header
+            },
+            params: {
+              wallet_id, // Filter by wallet_id
+            },
+          }
+        );
+
+        const { transactions } = response.data;
+
+        // Process transactions to get monthly cash-in and cash-out data
+        const monthlyData = Array(12).fill(0); // Initialize an array for 12 months
+        const monthlyCashOut = Array(12).fill(0);
+
+        transactions.forEach((transaction: any) => {
+          const date = new Date(transaction.created_at);
+          const month = date.getMonth(); // Get the month (0-11)
+
+          if (transaction.to_wallet_id === wallet_id) {
+            // Cash in
+            monthlyData[month] += transaction.amount;
+          } else if (transaction.from_wallet_id === wallet_id) {
+            // Cash out
+            monthlyCashOut[month] += transaction.amount;
+          }
+        });
+
+        // Prepare chart data
+        setChartData({
+          labels: [
+            "Jan",
+            "Feb",
+            "Mar",
+            "Apr",
+            "May",
+            "Jun",
+            "Jul",
+            "Aug",
+            "Sep",
+            "Oct",
+            "Nov",
+            "Dec",
+          ],
+          datasets: [
+            {
+              label: "Cash In",
+              data: monthlyData,
+              borderColor: "#129549",
+              borderWidth: 2,
+              backgroundColor: "#129549",
+              tension: 0.3,
+            },
+            {
+              label: "Cash Out",
+              data: monthlyCashOut,
+              borderColor: "#FF6666",
+              borderWidth: 2,
+              backgroundColor: "#FF6666",
+              tension: 0.3,
+            },
+          ],
+        });
+
+        setLoading(false);
+      } catch (error) {
+        console.error("Error fetching transactions:", error);
+        setLoading(false);
+      }
+    };
+
+    fetchTransactions();
+  }, [wallet_id, token]);
 
   const options: any = {
     responsive: true,
@@ -88,6 +149,7 @@ function CustomerMonthlyStats() {
         },
       },
       y: {
+        beginAtZero: true,
         grid: {
           display: false,
         },
@@ -97,6 +159,10 @@ function CustomerMonthlyStats() {
       },
     },
   };
+
+  if (loading) {
+    return <div>Loading...</div>;
+  }
 
   return (
     <div className="content-container flex flex-col monthly-stats">
@@ -112,7 +178,11 @@ function CustomerMonthlyStats() {
         </span>
       </div>
       <div style={{ width: "100%", height: "95%" }}>
-        <Line data={data} options={options} />
+        {chartData ? (
+          <Line data={chartData} options={options} />
+        ) : (
+          <div>No data available</div>
+        )}
       </div>
     </div>
   );

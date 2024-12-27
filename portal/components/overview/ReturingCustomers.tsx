@@ -121,7 +121,6 @@ function NewCustomers() {
       </span>
       <div className="flex items-center gap-1 w-full max-sm:flex-col justify-center m-auto">
         <h2>
-          K{" "}
           <NumberFlow
             format={{
               notation: "standard",

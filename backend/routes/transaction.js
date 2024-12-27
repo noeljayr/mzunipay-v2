@@ -6,6 +6,7 @@ const Transaction = require("../models/Transaction");
 const Refund = require("../models/Refund");
 const { apiAuth } = require("../middleware/apiAuth");
 const MerchantCustomerLog = require("../models/MerchantCustomerLog");
+const bcrypt = require("bcryptjs");
 
 const saveTransaction = async (
   fromWalletId,
@@ -62,6 +63,7 @@ const updateMerchantCustomerLog = async (merchantId, customerId) => {
     const newLog = new MerchantCustomerLog({
       merchant_id: merchantId,
       customer_id: customerId,
+      customer_name: await getUserFullName(customerId),
       first_transaction_date: now,
       last_transaction_date: now,
       transaction_count: 1,
@@ -80,29 +82,18 @@ router.post("/merchant/one-time", apiAuth, async (req, res) => {
     }
 
     // Get the merchant_user_id from the validated API key
-    const merchantUserId = req.merchant_user_id;
+    const merchantUserId = req.user.user_id;
 
     // Find the customer by email
     const customer = await User.findOne({ email: customer_email });
-    if (!customer || customer.account_type !== "Customer") {
-      return res.status(404).json({ message: "Customer not found" });
+    if (!customer) {
+      return res.status(404).json({ message: "Account not found" });
     }
 
     // Verify the customer's password
     const isPasswordValid = await bcrypt.compare(password, customer.password);
     if (!isPasswordValid) {
-      // Save the failed transaction
-      await saveTransaction(
-        null,
-        null,
-        amount,
-        "Payment",
-        "Failed",
-        description,
-        customer ? `${customer.first_name} ${customer.last_name}` : null,
-        req.merchant_name
-      );
-      return res.status(401).json({ message: "Invalid customer credentials" });
+      return res.status(401).json({ message: "Invalid credentials" });
     }
 
     // Fetch wallets for both the customer and merchant
@@ -125,8 +116,8 @@ router.post("/merchant/one-time", apiAuth, async (req, res) => {
         "Payment",
         "Failed",
         description,
-        `${customer.first_name} ${customer.last_name}`,
-        req.merchant_name
+        (customer_name = `${customer.first_name} ${customer.last_name}`),
+        req.user.merchant_name
       );
       return res.status(400).json({ message: "Insufficient balance" });
     }
@@ -187,7 +178,7 @@ router.post("/transfer", apiAuth, async (req, res) => {
 
     // Fetch receiver's wallet and user by wallet ID or email
     let receiverWallet, receiverUser;
-    let senderUser
+    let senderUser;
     let receiverName = null;
     if (receiver_identifier.includes("@")) {
       receiverUser = await User.findOne({ email: receiver_identifier });
@@ -195,7 +186,7 @@ router.post("/transfer", apiAuth, async (req, res) => {
         return res.status(404).json({ message: "Receiver not found" });
       }
       receiverWallet = await Wallet.findOne({ user_id: receiverUser.user_id });
-     
+
       receiverName = await getUserFullName(receiverUser.user_id);
     } else {
       receiverWallet = await Wallet.findOne({ wallet_id: receiver_identifier });
@@ -237,7 +228,7 @@ router.post("/transfer", apiAuth, async (req, res) => {
       await receiverWallet.save({ session });
 
       // Save successful transaction
-      
+
       const transaction = await saveTransaction(
         senderWallet.wallet_id,
         receiverWallet.wallet_id,
@@ -246,7 +237,7 @@ router.post("/transfer", apiAuth, async (req, res) => {
         "Completed",
         description,
         senderName,
-        receiverName = receiverUser.first_name + " " + receiverUser.last_name
+        (receiverName = receiverUser.first_name + " " + receiverUser.last_name)
       );
 
       // Commit transaction
