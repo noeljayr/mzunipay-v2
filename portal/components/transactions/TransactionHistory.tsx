@@ -30,8 +30,7 @@ function TransactionHistory() {
   const cookies = useCookies();
   const token = cookies.get("token");
   const [transactions, setTransactions] = useState<TransactionProps[]>([]);
-  const {balanceChangeState} = useBalanceChangeState()
-  
+  const { balanceChangeState } = useBalanceChangeState();
 
   useEffect(() => {
     const fetchTransactions = async () => {
@@ -40,7 +39,7 @@ function TransactionHistory() {
 
       try {
         const response = await fetch(
-          `${BASE_URL}/transactions?limit=4?sort=desc?`,
+          `${BASE_URL}/transactions?limit=10?sort=desc?`,
           {
             method: "GET",
             headers: {
@@ -55,9 +54,10 @@ function TransactionHistory() {
           setTransactions([]); // Clear handouts when nothing is found
         } else {
           const paymentsResponse = await response.json();
-          const paymentsData: TransactionProps[] = await paymentsResponse.transactions;
+          const paymentsData: TransactionProps[] =
+            await paymentsResponse.transactions;
           setTransactions(paymentsData);
-          console.log(paymentsData)
+          console.log(paymentsData);
           setNotFound(false);
         }
       } catch (e: any) {

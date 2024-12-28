@@ -11,7 +11,7 @@ import Loading from "../ux/Loading";
 import Error from "../ux/Error";
 
 function Deposit() {
-  let token = getCookie("token");
+  const token = getCookie("token");
 
   const { depositModalActive, setDepositModalActive } = useDepositModalStore();
   const [isLoading, setIsLoading] = useState(false);

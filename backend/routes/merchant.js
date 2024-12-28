@@ -182,99 +182,58 @@ router.post("/one-time", apiAuth, async (req, res) => {
 
 router.get("/metrics/customers", apiAuth, async (req, res) => {
   const { period } = req.query; // e.g., "week", "month", "year"
-  const merchantId = req.user.user_id;
+  const merchantId = req.user.user_id; // Ensure this is the unique identifier for the merchant
 
   try {
     const now = new Date();
-    let startDate, previousStartDate, previousEndDate;
+    let startDate;
 
-    // Determine the start and comparison timeframes based on the period
+    // Determine the start date based on the period
     if (period === "week") {
-      const dayOfWeek = now.getDay(); // Get current day of the week
+      const dayOfWeek = now.getDay(); // Get the current day of the week
       startDate = new Date(now.setDate(now.getDate() - dayOfWeek)); // Start of this week
-      previousStartDate = new Date(startDate);
-      previousStartDate.setDate(startDate.getDate() - 7); // Start of last week
-      previousEndDate = new Date(startDate);
-      previousEndDate.setDate(startDate.getDate() - 1); // End of last week
     } else if (period === "month") {
       startDate = new Date(now.getFullYear(), now.getMonth(), 1); // Start of this month
-      previousStartDate = new Date(now.getFullYear(), now.getMonth() - 1, 1); // Start of last month
-      previousEndDate = new Date(now.getFullYear(), now.getMonth(), 0); // End of last month
     } else if (period === "year") {
       startDate = new Date(now.getFullYear(), 0, 1); // Start of this year
-      previousStartDate = new Date(now.getFullYear() - 1, 0, 1); // Start of last year
-      previousEndDate = new Date(now.getFullYear() - 1, 11, 31); // End of last year
     } else {
       return res.status(400).json({ message: "Invalid period specified" });
     }
 
-    // Fetch logs for the current period
-    const currentLogs = await MerchantCustomerLog.find({
+    // Fetch customer logs within the specified period
+    const customerLogs = await MerchantCustomerLog.find({
       merchant_id: merchantId,
       last_transaction_date: { $gte: startDate },
     });
 
-    // Fetch logs for the previous period
-    const previousLogs = await MerchantCustomerLog.find({
-      merchant_id: merchantId,
-      last_transaction_date: {
-        $gte: previousStartDate,
-        $lte: previousEndDate,
-      },
-    });
-
-    // Calculate new and returning customers for the current period
-    const currentNewCustomers = currentLogs.filter(
-      (log) => log.first_transaction_date >= startDate
-    ).length;
-    const currentReturningCustomers = currentLogs.length - currentNewCustomers;
-
-    // Calculate new and returning customers for the previous period
-    const previousNewCustomers = previousLogs.filter(
-      (log) => log.first_transaction_date >= previousStartDate
-    ).length;
-    const previousReturningCustomers =
-      previousLogs.length - previousNewCustomers;
-
-    // Helper function to calculate percentage difference
-    const calculatePercentageDifference = (current, previous) => {
-      if (previous === 0) return current > 0 ? 100 : 0; // Avoid division by zero
-      return ((current - previous) / previous) * 100;
-    };
-
-    // Calculate percentage differences
-    const totalCustomersChange = calculatePercentageDifference(
-      currentLogs.length,
-      previousLogs.length
+    // Categorize customers as new or returning
+    const newCustomers = customerLogs.filter(
+      (log) => log.transaction_count === 1
     );
-    const newCustomersChange = calculatePercentageDifference(
-      currentNewCustomers,
-      previousNewCustomers
-    );
-    const returningCustomersChange = calculatePercentageDifference(
-      currentReturningCustomers,
-      previousReturningCustomers
+    const returningCustomers = customerLogs.filter(
+      (log) => log.transaction_count > 1
     );
 
-    // Respond with metrics
+    // Calculate counts
+    const newCustomerCount = newCustomers.length;
+    const returningCustomerCount = returningCustomers.length;
+
+    // Send response
     res.status(200).json({
       period,
-      totalCustomers: currentLogs.length,
-      totalCustomersChange, // Percentage difference
-      newCustomers: currentNewCustomers,
-      newCustomersChange, // Percentage difference
-      returningCustomers: currentReturningCustomers,
-      returningCustomersChange, // Percentage difference
+      newCustomerCount,
+      returningCustomerCount,
     });
   } catch (error) {
-    console.error("Error fetching merchant metrics:", error);
+    console.error("Error fetching customer metrics:", error);
     res.status(500).json({ message: "Server error" });
   }
 });
 
 router.get("/metrics/refunds", apiAuth, async (req, res) => {
   const { period } = req.query; // e.g., "week", "month", "year"
-  const merchantId = req.user.user_id; // Ensure this is the unique identifier for the merchant
+  const merchantId = req.user.user_id; 
+  const wallet = req.user.wallet_id;
 
 
   try {
@@ -296,7 +255,7 @@ router.get("/metrics/refunds", apiAuth, async (req, res) => {
     // Fetch all refunds within the current period for the specific merchant
     const refunds = await Transaction.find({
       transaction_type: "Refund",
-      from_wallet_id: merchantId, // Ensure refunds are associated with the merchant
+      from_wallet_id: wallet, // Ensure refunds are associated with the merchant
       created_at: { $gte: startDate }, // Only transactions within the specified timeframe
     });
 
@@ -331,7 +290,7 @@ router.get("/metrics/refunds", apiAuth, async (req, res) => {
 
     const previousRefunds = await Transaction.find({
       transaction_type: "Refund",
-      from_wallet_id: merchantId, // Ensure refunds are associated with the merchant
+      from_wallet_id: wallet, // Ensure refunds are associated with the merchant
       created_at: { $gte: previousStartDate, $lte: previousEndDate }, // Only transactions in the previous period
     });
 
@@ -369,6 +328,7 @@ router.get("/metrics/refunds", apiAuth, async (req, res) => {
 router.get("/metrics/revenue", apiAuth, async (req, res) => {
   const { period } = req.query; // e.g., "week", "month", "year"
   const merchantId = req.user.user_id; // Ensure this is the unique identifier for the merchant
+  const wallet = req.user.wallet_id
   
 
   try {
@@ -391,7 +351,7 @@ router.get("/metrics/revenue", apiAuth, async (req, res) => {
     const transactions = await Transaction.find({
       transaction_type: "Payment",
       status: "Completed",
-      to_wallet_id: merchantId, // Ensure only transactions belonging to this merchant
+      to_wallet_id: wallet, // Ensure only transactions belonging to this merchant
       created_at: { $gte: startDate }, // Only transactions within the specified timeframe
     });
 
@@ -427,7 +387,7 @@ router.get("/metrics/revenue", apiAuth, async (req, res) => {
     const previousTransactions = await Transaction.find({
       transaction_type: "Payment",
       status: "Completed",
-      to_wallet_id: merchantId, // Ensure only transactions belonging to this merchant
+      to_wallet_id: wallet, // Ensure only transactions belonging to this merchant
       created_at: { $gte: previousStartDate, $lte: previousEndDate },
     });
 

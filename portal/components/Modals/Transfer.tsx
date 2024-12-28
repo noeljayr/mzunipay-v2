@@ -16,7 +16,6 @@ import { getCookie, setCookie } from "cookies-next/client";
 import { jwtDecode } from "jwt-decode";
 import { BASE_URL } from "@/constants/constants";
 import Loading from "../ux/Loading";
-import Error from "../ux/Error";
 import defaultAvatar from "@/public/avatars/default.png";
 import useBalanceChangeState from "@/states/balanceChangeStore";
 
@@ -249,6 +248,14 @@ function Transfer() {
     }
   };
 
+  const back = () => {
+    if (currentStep === "select-user") {
+      setTransferModalActive();
+    } else {
+      setCurrentStep("select-user");
+    }
+  };
+
   return (
     <>
       {transferModalActive ? (
@@ -260,14 +267,7 @@ function Transfer() {
         } transfer-modal`}
       >
         <h1 className="">
-          <span
-            onClick={() => {
-              currentStep === "select-user"
-                ? setTransferModalActive()
-                : setCurrentStep("select-user");
-            }}
-            className="close flex gap-1 font-normal"
-          >
+          <span onClick={back} className="close flex gap-1 font-normal">
             <IconArrowLeft />
             Back
           </span>{" "}

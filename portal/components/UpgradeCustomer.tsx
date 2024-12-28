@@ -22,11 +22,12 @@ function UpgradeCustomer() {
   const [user_id, setUserId] = useState("");
   const token = getCookie("token");
   const user: TokenTypes = jwtDecode(token || "");
+  const router = useRouter();
   useEffect(() => {
     setUserId(user.user_id);
-  }, [token]);
+  }, [token, user.user_id]);
 
-  const router = useRouter();
+ 
 
   useEffect(() => {
     if (isUpgraded) {

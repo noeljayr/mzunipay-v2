@@ -38,25 +38,10 @@ function DocsNav() {
           className={pathname == "/landing/dev/" ? "active-link" : ""}
           href="/landing/dev/"
         >
-          Getting Started
+          Overview
         </Link>
-        <Link href="/landing/dev/usage">Usage</Link>
-        <Link href="/landing/dev/styling">Styling</Link>
-        <div className="flex flex-col gap-2">
-          Code Samples
-          <div className="flex flex-col gap-2 pl-2 truncate">
-            <Link className="truncate" href="/landing/dev/samples/cdn">
-              Javascript (CDN)
-            </Link>
-            <Link className="truncate" href="/landing/dev/samples/react">
-              React
-            </Link>
-            {/* <Link href="/landing/dev/samples/vue">Vue</Link> */}
-            <Link className="truncate" href="/landing/dev/samples/php">
-              PHP
-            </Link>
-          </div>
-        </div>
+
+        <Link href='/landing/dev/status-handlers' className="flex flex-col gap-2">Status Handlers</Link>
       </div>
     </>
   );

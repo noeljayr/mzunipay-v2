@@ -21,13 +21,7 @@ function page() {
           <p className="mb-4 text-center">
             We could not find this page, but there is still plenty to see!
           </p>
-          <Link
-            onClick={() => {
-              back;
-            }}
-            className="cta"
-            href="/"
-          >
+          <Link onClick={back} className="cta" href="/">
             <IconArrowLeft />
             Back
           </Link>

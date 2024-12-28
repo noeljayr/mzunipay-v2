@@ -30,7 +30,6 @@
     "react": "^19.0.0",
     "react-chartjs-2": "^5.2.0",
     "react-dom": "^19.0.0",
-    "react-markdown": "^8.0.7",
     "react-syntax-highlighter": "^15.6.1",
     "react-syntax-highlighter-virtualized-renderer": "^1.1.0",
     "rehype-raw": "^7.0.0",
@@ -40,7 +39,7 @@
   },
   "devDependencies": {
     "@types/node": "^20",
-    "@types/react": "^19",
+    "@types/react": "^19.0.2",
     "@types/react-chartjs-2": "^2.0.2",
     "@types/react-dom": "^19",
     "eslint": "^8",
