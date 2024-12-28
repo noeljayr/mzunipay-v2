@@ -5,7 +5,7 @@ const transactionRoutes = require("./routes/transaction");
 const userRoutes = require("./routes/user");
 const merchantRoutes = require("./routes/merchant");
 const walletRoutes = require("./routes/wallet");
-const apiRoutes = require("./routes/apiKeys")
+const apiRoutes = require("./routes/apiKeys");
 const cors = require("cors");
 
 dotenv.config();
@@ -28,7 +28,11 @@ app.use("/api/transactions", transactionRoutes);
 app.use("/api/users", userRoutes);
 app.use("/api/merchants", merchantRoutes);
 app.use("/api/wallets", walletRoutes);
-app.use("/api/api-keys", apiRoutes)
+app.use("/api/api-keys", apiRoutes);
+
+app.get("/", (req, res) => {
+  res.send("MzuniPay");
+});
 
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
