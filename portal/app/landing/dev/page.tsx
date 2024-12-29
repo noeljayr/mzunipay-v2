@@ -511,11 +511,7 @@ function Dev() {
           Test your integration in a staging environment before going live.
         </li>
       </ol>
-      <p>
-        For further assistance, contact{" "}
-        <a href="mailto:support@mzunipay.com">support@mzunipay.com</a>.
-      </p>
-      Fork me on GitHub
+      
     </div>
   );
 }

@@ -610,11 +610,7 @@ function StatusHandlers() {
           application’s tone and branding.
         </li>
       </ol>
-      <p>
-        For more information, contact{" "}
-        <a href="mailto:support@mzunipay.com">support@mzunipay.com</a>.
-      </p>
-      Fork me on GitHub
+      
     </div>
   );
 }
