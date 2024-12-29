@@ -24,18 +24,22 @@ function StatusHandlers() {
           <span className="hljs-keyword">import</span>{" "}
           <span className="hljs-title class_">MzuniPay</span>{" "}
           <span className="hljs-keyword">from</span>{" "}
-          <span className="hljs-string">"mzunipay-sdk"</span>;{"\n"}
+          <span className="hljs-string">&quot;mzunipay-sdk&quot;</span>;{"\n"}
           {"\n"}
           <span className="hljs-keyword">const</span> mzuniPay ={" "}
           <span className="hljs-keyword">new</span>{" "}
           <span className="hljs-title class_">MzuniPay</span>(
-          <span className="hljs-string">"your-api-key-here"</span>);{"\n"}
+          <span className="hljs-string">&quot;your-api-key-here&quot;</span>);
+          {"\n"}
           {"\n"}mzuniPay.
           <span className="hljs-title function_">renderForm</span>({"{"}
           {"\n"}
           {"  "}
           <span className="hljs-attr">containerId</span>:{" "}
-          <span className="hljs-string">"payment-form-container"</span>,{"\n"}
+          <span className="hljs-string">
+            &quot;payment-form-container&quot;
+          </span>
+          ,{"\n"}
           {"  "}
           <span className="hljs-attr">onSuccess</span>:{" "}
           <span className="hljs-keyword">async</span> (response) =&gt; {"{"}
@@ -43,7 +47,8 @@ function StatusHandlers() {
           {"    "}
           <span className="hljs-variable language_">console</span>.
           <span className="hljs-title function_">log</span>(
-          <span className="hljs-string">"Payment Successful!"</span>, response);
+          <span className="hljs-string">&quot;Payment Successful!&quot;</span>,
+          response);
           {"\n"}
           {"\n"}
           {"    "}
@@ -51,24 +56,26 @@ function StatusHandlers() {
           {"\n"}
           {"      "}
           <span className="hljs-comment">
-            // Save transaction to the database
+            {"//"} Save transaction to the database
           </span>
           {"\n"}
           {"      "}
           <span className="hljs-keyword">const</span> res ={" "}
           <span className="hljs-keyword">await</span>{" "}
           <span className="hljs-title function_">fetch</span>(
-          <span className="hljs-string">"/api/save-transaction"</span>, {"{"}
+          <span className="hljs-string">&quot;/api/save-transaction&quot;</span>
+          , {"{"}
           {"\n"}
           {"        "}
           <span className="hljs-attr">method</span>:{" "}
-          <span className="hljs-string">"POST"</span>,{"\n"}
+          <span className="hljs-string">&quot;POST&quot;</span>,{"\n"}
           {"        "}
           <span className="hljs-attr">headers</span>: {"{"}
           {"\n"}
           {"          "}
-          <span className="hljs-string">"Content-Type"</span>:{" "}
-          <span className="hljs-string">"application/json"</span>,{"\n"}
+          <span className="hljs-string">&quot;Content-Type&quot;</span>:{" "}
+          <span className="hljs-string">&quot;application/json&quot;</span>,
+          {"\n"}
           {"        "}
           {"}"},{"\n"}
           {"        "}
@@ -101,7 +108,10 @@ function StatusHandlers() {
           <span className="hljs-keyword">throw</span>{" "}
           <span className="hljs-keyword">new</span>{" "}
           <span className="hljs-title class_">Error</span>(
-          <span className="hljs-string">"Failed to save transaction"</span>);
+          <span className="hljs-string">
+            &quot;Failed to save transaction&quot;
+          </span>
+          );
           {"\n"}
           {"      "}
           {"}"}
@@ -110,7 +120,9 @@ function StatusHandlers() {
           {"      "}
           <span className="hljs-variable language_">console</span>.
           <span className="hljs-title function_">log</span>(
-          <span className="hljs-string">"Transaction saved successfully!"</span>
+          <span className="hljs-string">
+            &quot;Transaction saved successfully!&quot;
+          </span>
           );
           {"\n"}
           {"    "}
@@ -119,8 +131,10 @@ function StatusHandlers() {
           {"      "}
           <span className="hljs-variable language_">console</span>.
           <span className="hljs-title function_">error</span>(
-          <span className="hljs-string">"Error saving transaction:"</span>,
-          error);
+          <span className="hljs-string">
+            &quot;Error saving transaction:&quot;
+          </span>
+          , error);
           {"\n"}
           {"    "}
           {"}"}
@@ -137,7 +151,8 @@ function StatusHandlers() {
           {"    "}
           <span className="hljs-variable language_">console</span>.
           <span className="hljs-title function_">error</span>(
-          <span className="hljs-string">"Payment Failed!"</span>, error);{"\n"}
+          <span className="hljs-string">&quot;Payment Failed!&quot;</span>,
+          error);{"\n"}
           {"  "}
           {"}"},{"\n"}
           {"  "}
@@ -145,7 +160,7 @@ function StatusHandlers() {
           <span className="hljs-literal">true</span>,{"\n"}
           {"  "}
           <span className="hljs-attr">buttonText</span>:{" "}
-          <span className="hljs-string">"Pay Now"</span>,{"\n"}
+          <span className="hljs-string">&quot;Pay Now&quot;</span>,{"\n"}
           {"  "}
           <span className="hljs-attr">defaultValues</span>: {"{"}
           {"\n"}
@@ -154,7 +169,7 @@ function StatusHandlers() {
           <span className="hljs-number">150.0</span>,{"\n"}
           {"    "}
           <span className="hljs-attr">description</span>:{" "}
-          <span className="hljs-string">"Order #1234"</span>,{"\n"}
+          <span className="hljs-string">&quot;Order #1234&quot;</span>,{"\n"}
           {"  "}
           {"}"},{"\n"}
           {"}"});{"\n"}
@@ -172,18 +187,22 @@ function StatusHandlers() {
           <span className="hljs-keyword">import</span>{" "}
           <span className="hljs-title class_">MzuniPay</span>{" "}
           <span className="hljs-keyword">from</span>{" "}
-          <span className="hljs-string">"mzunipay-sdk"</span>;{"\n"}
+          <span className="hljs-string">&quot;mzunipay-sdk&quot;</span>;{"\n"}
           {"\n"}
           <span className="hljs-keyword">const</span> mzuniPay ={" "}
           <span className="hljs-keyword">new</span>{" "}
           <span className="hljs-title class_">MzuniPay</span>(
-          <span className="hljs-string">"your-api-key-here"</span>);{"\n"}
+          <span className="hljs-string">&quot;your-api-key-here&quot;</span>);
+          {"\n"}
           {"\n"}mzuniPay.
           <span className="hljs-title function_">renderForm</span>({"{"}
           {"\n"}
           {"  "}
           <span className="hljs-attr">containerId</span>:{" "}
-          <span className="hljs-string">"payment-form-container"</span>,{"\n"}
+          <span className="hljs-string">
+            &quot;payment-form-container&quot;
+          </span>
+          ,{"\n"}
           {"  "}
           <span className="hljs-attr">onSuccess</span>:{" "}
           <span className="hljs-function">
@@ -194,23 +213,25 @@ function StatusHandlers() {
           {"    "}
           <span className="hljs-variable language_">console</span>.
           <span className="hljs-title function_">log</span>(
-          <span className="hljs-string">"Payment Successful!"</span>, response);
+          <span className="hljs-string">&quot;Payment Successful!&quot;</span>,
+          response);
           {"\n"}
           {"\n"}
           {"    "}
           <span className="hljs-comment">
-            // Display a success message to the customer
+            {"//"} Display a success message to the customer
           </span>
           {"\n"}
           {"    "}
           <span className="hljs-keyword">const</span> statusDiv ={" "}
           <span className="hljs-variable language_">document</span>.
           <span className="hljs-title function_">getElementById</span>(
-          <span className="hljs-string">"payment-status"</span>);{"\n"}
+          <span className="hljs-string">&quot;payment-status&quot;</span>);
+          {"\n"}
           {"    "}statusDiv.<span className="hljs-property">innerHTML</span> ={" "}
           <span className="hljs-string">
-            `&lt;p style="color: green; font-weight: bold;"&gt;Payment
-            successful! Thank you for your purchase.&lt;/p&gt;`
+            &apos;&lt;p style=&quot;color: green; font-weight: bold;&quot;&gt;Payment
+            successful! Thank you for your purchase.&lt;/p&gt;&apos;
           </span>
           ;{"\n"}
           {"  "}
@@ -225,21 +246,23 @@ function StatusHandlers() {
           {"    "}
           <span className="hljs-variable language_">console</span>.
           <span className="hljs-title function_">error</span>(
-          <span className="hljs-string">"Payment Failed!"</span>, error);{"\n"}
+          <span className="hljs-string">&quot;Payment Failed!&quot;</span>,
+          error);{"\n"}
           {"\n"}
           {"    "}
           <span className="hljs-comment">
-            // Display an error message to the customer
+            {"//"} Display an error message to the customer
           </span>
           {"\n"}
           {"    "}
           <span className="hljs-keyword">const</span> statusDiv ={" "}
           <span className="hljs-variable language_">document</span>.
           <span className="hljs-title function_">getElementById</span>(
-          <span className="hljs-string">"payment-status"</span>);{"\n"}
+          <span className="hljs-string">&quot;payment-status&quot;</span>);
+          {"\n"}
           {"    "}statusDiv.<span className="hljs-property">innerHTML</span> ={" "}
           <span className="hljs-string">
-            `&lt;p style="color: red; font-weight: bold;"&gt;Payment failed.
+            `&lt;p style=&quot;color: red; font-weight: bold;&quot;&gt;Payment failed.
             Please try again or contact support.&lt;/p&gt;`
           </span>
           ;{"\n"}
@@ -250,7 +273,7 @@ function StatusHandlers() {
           <span className="hljs-literal">true</span>,{"\n"}
           {"  "}
           <span className="hljs-attr">buttonText</span>:{" "}
-          <span className="hljs-string">"Submit Payment"</span>,{"\n"}
+          <span className="hljs-string">&quot;Submit Payment&quot;</span>,{"\n"}
           {"  "}
           <span className="hljs-attr">defaultValues</span>: {"{"}
           {"\n"}
@@ -259,7 +282,8 @@ function StatusHandlers() {
           <span className="hljs-number">200.0</span>,{"\n"}
           {"    "}
           <span className="hljs-attr">description</span>:{" "}
-          <span className="hljs-string">"Subscription Payment"</span>,{"\n"}
+          <span className="hljs-string">&quot;Subscription Payment&quot;</span>,
+          {"\n"}
           {"  "}
           {"}"},{"\n"}
           {"}"});{"\n"}
@@ -271,7 +295,10 @@ function StatusHandlers() {
           <span className="hljs-tag">
             &lt;<span className="hljs-name">div</span>{" "}
             <span className="hljs-attr">id</span>=
-            <span className="hljs-string">"payment-form-container"</span>&gt;
+            <span className="hljs-string">
+              &quot;payment-form-container&quot;
+            </span>
+            &gt;
           </span>
           <span className="hljs-tag">
             &lt;/<span className="hljs-name">div</span>&gt;
@@ -280,7 +307,7 @@ function StatusHandlers() {
           <span className="hljs-tag">
             &lt;<span className="hljs-name">div</span>{" "}
             <span className="hljs-attr">id</span>=
-            <span className="hljs-string">"payment-status"</span>&gt;
+            <span className="hljs-string">&quot;payment-status&quot;</span>&gt;
           </span>
           <span className="hljs-tag">
             &lt;/<span className="hljs-name">div</span>&gt;
@@ -300,18 +327,22 @@ function StatusHandlers() {
           <span className="hljs-keyword">import</span>{" "}
           <span className="hljs-title class_">MzuniPay</span>{" "}
           <span className="hljs-keyword">from</span>{" "}
-          <span className="hljs-string">"mzunipay-sdk"</span>;{"\n"}
+          <span className="hljs-string">&quot;mzunipay-sdk&quot;</span>;{"\n"}
           {"\n"}
           <span className="hljs-keyword">const</span> mzuniPay ={" "}
           <span className="hljs-keyword">new</span>{" "}
           <span className="hljs-title class_">MzuniPay</span>(
-          <span className="hljs-string">"your-api-key-here"</span>);{"\n"}
+          <span className="hljs-string">&quot;your-api-key-here&quot;</span>);
+          {"\n"}
           {"\n"}mzuniPay.
           <span className="hljs-title function_">renderForm</span>({"{"}
           {"\n"}
           {"  "}
           <span className="hljs-attr">containerId</span>:{" "}
-          <span className="hljs-string">"payment-form-container"</span>,{"\n"}
+          <span className="hljs-string">
+            &quot;payment-form-container&quot;
+          </span>
+          ,{"\n"}
           {"  "}
           <span className="hljs-attr">onSuccess</span>:{" "}
           <span className="hljs-function">
@@ -322,30 +353,32 @@ function StatusHandlers() {
           {"    "}
           <span className="hljs-variable language_">console</span>.
           <span className="hljs-title function_">log</span>(
-          <span className="hljs-string">"Payment Successful!"</span>, response);
+          <span className="hljs-string">&quot;Payment Successful!&quot;</span>,
+          response);
           {"\n"}
           {"\n"}
           {"    "}
           <span className="hljs-comment">
-            // Send transaction data to an analytics service
+            {"//"} Send transaction data to an analytics service
           </span>
           {"\n"}
           {"    "}
           <span className="hljs-title function_">fetch</span>(
           <span className="hljs-string">
-            "https://analytics.example.com/log"
+          &quot;https:{"//"}analytics.example.com/log&quot;
           </span>
           , {"{"}
           {"\n"}
           {"      "}
           <span className="hljs-attr">method</span>:{" "}
-          <span className="hljs-string">"POST"</span>,{"\n"}
+          <span className="hljs-string">&quot;POST&quot;</span>,{"\n"}
           {"      "}
           <span className="hljs-attr">headers</span>: {"{"}
           {"\n"}
           {"        "}
-          <span className="hljs-string">"Content-Type"</span>:{" "}
-          <span className="hljs-string">"application/json"</span>,{"\n"}
+          <span className="hljs-string">&quot;Content-Type&quot;</span>:{" "}
+          <span className="hljs-string">&quot;application/json&quot;</span>,
+          {"\n"}
           {"      "}
           {"}"},{"\n"}
           {"      "}
@@ -355,7 +388,8 @@ function StatusHandlers() {
           {"\n"}
           {"        "}
           <span className="hljs-attr">event</span>:{" "}
-          <span className="hljs-string">"payment_success"</span>,{"\n"}
+          <span className="hljs-string">&quot;payment_success&quot;</span>,
+          {"\n"}
           {"        "}
           <span className="hljs-attr">transactionId</span>: response.
           <span className="hljs-property">transactionId</span>,{"\n"}
@@ -381,29 +415,31 @@ function StatusHandlers() {
           {"    "}
           <span className="hljs-variable language_">console</span>.
           <span className="hljs-title function_">error</span>(
-          <span className="hljs-string">"Payment Failed!"</span>, error);{"\n"}
+          <span className="hljs-string">&quot;Payment Failed!&quot;</span>,
+          error);{"\n"}
           {"\n"}
           {"    "}
           <span className="hljs-comment">
-            // Log errors to an error-tracking service
+            {"//"} Log errors to an error-tracking service
           </span>
           {"\n"}
           {"    "}
           <span className="hljs-title function_">fetch</span>(
           <span className="hljs-string">
-            "https://analytics.example.com/log"
+          &quot;https:{"//"}analytics.example.com/log&quot;
           </span>
           , {"{"}
           {"\n"}
           {"      "}
           <span className="hljs-attr">method</span>:{" "}
-          <span className="hljs-string">"POST"</span>,{"\n"}
+          <span className="hljs-string">&quot;POST&quot;</span>,{"\n"}
           {"      "}
           <span className="hljs-attr">headers</span>: {"{"}
           {"\n"}
           {"        "}
-          <span className="hljs-string">"Content-Type"</span>:{" "}
-          <span className="hljs-string">"application/json"</span>,{"\n"}
+          <span className="hljs-string">&quot;Content-Type&quot;</span>:{" "}
+          <span className="hljs-string">&quot;application/json&quot;</span>,
+          {"\n"}
           {"      "}
           {"}"},{"\n"}
           {"      "}
@@ -413,7 +449,7 @@ function StatusHandlers() {
           {"\n"}
           {"        "}
           <span className="hljs-attr">event</span>:{" "}
-          <span className="hljs-string">"payment_error"</span>,{"\n"}
+          <span className="hljs-string">&quot;payment_error&quot;</span>,{"\n"}
           {"        "}
           <span className="hljs-attr">error</span>: error.
           <span className="hljs-property">message</span>,{"\n"}
@@ -428,7 +464,7 @@ function StatusHandlers() {
           <span className="hljs-literal">true</span>,{"\n"}
           {"  "}
           <span className="hljs-attr">buttonText</span>:{" "}
-          <span className="hljs-string">"Pay Now"</span>,{"\n"}
+          <span className="hljs-string">&quot;Pay Now&quot;</span>,{"\n"}
           {"  "}
           <span className="hljs-attr">defaultValues</span>: {"{"}
           {"\n"}
@@ -437,7 +473,7 @@ function StatusHandlers() {
           <span className="hljs-number">100.0</span>,{"\n"}
           {"    "}
           <span className="hljs-attr">description</span>:{" "}
-          <span className="hljs-string">"Service Fee"</span>,{"\n"}
+          <span className="hljs-string">&quot;Service Fee&quot;</span>,{"\n"}
           {"  "}
           {"}"},{"\n"}
           {"}"});{"\n"}
@@ -455,18 +491,22 @@ function StatusHandlers() {
           <span className="hljs-keyword">import</span>{" "}
           <span className="hljs-title class_">MzuniPay</span>{" "}
           <span className="hljs-keyword">from</span>{" "}
-          <span className="hljs-string">"mzunipay-sdk"</span>;{"\n"}
+          <span className="hljs-string">&quot;mzunipay-sdk&quot;</span>;{"\n"}
           {"\n"}
           <span className="hljs-keyword">const</span> mzuniPay ={" "}
           <span className="hljs-keyword">new</span>{" "}
           <span className="hljs-title class_">MzuniPay</span>(
-          <span className="hljs-string">"your-api-key-here"</span>);{"\n"}
+          <span className="hljs-string">&quot;your-api-key-here&quot;</span>);
+          {"\n"}
           {"\n"}mzuniPay.
           <span className="hljs-title function_">renderForm</span>({"{"}
           {"\n"}
           {"  "}
           <span className="hljs-attr">containerId</span>:{" "}
-          <span className="hljs-string">"payment-form-container"</span>,{"\n"}
+          <span className="hljs-string">
+            &quot;payment-form-container&quot;
+          </span>
+          ,{"\n"}
           {"  "}
           <span className="hljs-attr">onSuccess</span>:{" "}
           <span className="hljs-function">
@@ -477,11 +517,14 @@ function StatusHandlers() {
           {"    "}
           <span className="hljs-variable language_">console</span>.
           <span className="hljs-title function_">log</span>(
-          <span className="hljs-string">"Payment Successful!"</span>, response);
+          <span className="hljs-string">&quot;Payment Successful!&quot;</span>,
+          response);
           {"\n"}
           {"\n"}
           {"    "}
-          <span className="hljs-comment">// Redirect to a thank-you page</span>
+          <span className="hljs-comment">
+            {"//"} Redirect to a thank-you page
+          </span>
           {"\n"}
           {"    "}
           <span className="hljs-variable language_">window</span>.
@@ -507,10 +550,11 @@ function StatusHandlers() {
           {"    "}
           <span className="hljs-variable language_">console</span>.
           <span className="hljs-title function_">error</span>(
-          <span className="hljs-string">"Payment Failed!"</span>, error);{"\n"}
+          <span className="hljs-string">&quot;Payment Failed!&quot;</span>,
+          error);{"\n"}
           {"\n"}
           {"    "}
-          <span className="hljs-comment">// Redirect to an error page</span>
+          <span className="hljs-comment">{"//"} Redirect to an error page</span>
           {"\n"}
           {"    "}
           <span className="hljs-variable language_">window</span>.
@@ -533,7 +577,8 @@ function StatusHandlers() {
           <span className="hljs-literal">true</span>,{"\n"}
           {"  "}
           <span className="hljs-attr">buttonText</span>:{" "}
-          <span className="hljs-string">"Complete Payment"</span>,{"\n"}
+          <span className="hljs-string">&quot;Complete Payment&quot;</span>,
+          {"\n"}
           {"  "}
           <span className="hljs-attr">defaultValues</span>: {"{"}
           {"\n"}
@@ -542,7 +587,8 @@ function StatusHandlers() {
           <span className="hljs-number">250.0</span>,{"\n"}
           {"    "}
           <span className="hljs-attr">description</span>:{" "}
-          <span className="hljs-string">"Event Ticket Purchase"</span>,{"\n"}
+          <span className="hljs-string">&quot;Event Ticket Purchase&quot;</span>
+          ,{"\n"}
           {"  "}
           {"}"},{"\n"}
           {"}"});{"\n"}

@@ -411,8 +411,8 @@ function Transfer() {
                   <div onClick={setTransferModalActive} className="cta-2">
                     Close
                   </div>
-                  <button type="submit" disabled={isLoading} className="cta">
-                    {isLoading ? <LoadingLight /> : "Transfer"}
+                  <button type="submit" disabled={loading} className="cta">
+                    {loading ? <LoadingLight /> : "Transfer"}
                   </button>
                 </div>
               </div>

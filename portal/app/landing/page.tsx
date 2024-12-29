@@ -2,7 +2,6 @@ import Image from "next/image";
 import Link from "next/link";
 import heroImage from "@/public/hero.png";
 import home from "@/public/home.png";
-
 import { IconCheck, IconChevronRight } from "@tabler/icons-react";
 
 function Overview() {
@@ -75,12 +74,12 @@ function Overview() {
 
           <span className="step">
             <span>3</span>
-            Deposit funds into your account, its optional of course
+            Deposit funds into your account
           </span>
 
           <span className="step">
             <span>4</span>
-            Let the e-commerce begin!
+            Now you&apos;re ready to make payments
           </span>
         </div>
 
@@ -89,7 +88,15 @@ function Overview() {
 
       <div className="features flex mb gap-2 flex-col" id="features">
         <div className="ft">
-          <div className="video"></div>
+          <div className="video">
+            <video
+              src="/videos/transfer.mp4"
+              controls={true}
+              loop={true}
+              autoPlay={true}
+              className="transfer-video"
+            />
+          </div>
           <div className="text">
             <b>Wallet to Wallet Transfer</b>
 
@@ -117,7 +124,17 @@ function Overview() {
               </li>
             </ul>
           </div>
-          <div className="video"></div>
+          <div className="video">
+            <video
+              src="/videos/e-commerce.mp4"
+              controls={true}
+              loop={true}
+              autoPlay={true}
+              preload="true"
+              
+              className="transfer-video"
+            />
+          </div>
         </div>
       </div>
     </div>

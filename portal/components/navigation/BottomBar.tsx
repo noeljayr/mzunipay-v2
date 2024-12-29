@@ -72,7 +72,7 @@ function BottomBar() {
       </Link>
 
       <Link
-        href="/portal/profile"
+        href="#"
         className="profile-icon flex gap-2 items-center p-1 cursor-pointer"
       >
         <span className="">

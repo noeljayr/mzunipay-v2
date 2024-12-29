@@ -22,7 +22,7 @@ function Dev() {
             &lt;<span className="hljs-name">script</span>{" "}
             <span className="hljs-attr">src</span>=
             <span className="hljs-string">
-              "https://cdn.jsdelivr.net/npm/mzunipay-sdk/dist/index.umd.js"
+              &quot;https:{"//"}cdn.jsdelivr.net/npm/mzunipay-sdk/dist/index.umd.js&quot;
             </span>
             &gt;
           </span>
@@ -44,19 +44,19 @@ function Dev() {
           <span className="hljs-keyword">import</span>{" "}
           <span className="hljs-title class_">MzuniPay</span>{" "}
           <span className="hljs-keyword">from</span>{" "}
-          <span className="hljs-string">"mzunipay-sdk"</span>;{"\n"}
+          <span className="hljs-string">&quot;mzunipay-sdk&quot;</span>;{"\n"}
           {"\n"}
           <span className="hljs-keyword">const</span> mzuniPay ={" "}
           <span className="hljs-keyword">new</span>{" "}
           <span className="hljs-title class_">MzuniPay</span>(
-          <span className="hljs-string">"your-api-key-here"</span>);{"\n"}
+          <span className="hljs-string">&quot;your-api-key-here&quot;</span>);{"\n"}
           {"\n"}mzuniPay.
           <span className="hljs-title function_">renderForm</span>({"{"}
           {"\n"}
           {"  "}
           <span className="hljs-attr">containerId</span>:{" "}
-          <span className="hljs-string">"payment-form-container"</span>,{" "}
-          <span className="hljs-comment">// ID of the container element</span>
+          <span className="hljs-string">&quot;payment-form-container&quot;</span>,{" "}
+          <span className="hljs-comment">{"//"} ID of the container element</span>
           {"\n"}
           {"  "}
           <span className="hljs-attr">onSuccess</span>:{" "}
@@ -68,7 +68,7 @@ function Dev() {
           {"    "}
           <span className="hljs-variable language_">console</span>.
           <span className="hljs-title function_">log</span>(
-          <span className="hljs-string">"Payment Successful!"</span>, response);
+          <span className="hljs-string">&quot;Payment Successful!&quot;</span>, response);
           {"\n"}
           {"  "}
           {"}"},{"\n"}
@@ -82,20 +82,20 @@ function Dev() {
           {"    "}
           <span className="hljs-variable language_">console</span>.
           <span className="hljs-title function_">error</span>(
-          <span className="hljs-string">"Payment Failed!"</span>, error);{"\n"}
+          <span className="hljs-string">&quot;Payment Failed!&quot;</span>, error);{"\n"}
           {"  "}
           {"}"},{"\n"}
           {"  "}
           <span className="hljs-attr">styled</span>:{" "}
           <span className="hljs-literal">true</span>,{" "}
           <span className="hljs-comment">
-            // Enable default styling (optional, default is true)
+            {"//"} Enable default styling (optional, default is true)
           </span>
           {"\n"}
           {"  "}
           <span className="hljs-attr">buttonText</span>:{" "}
-          <span className="hljs-string">"Pay Now"</span>,{" "}
-          <span className="hljs-comment">// Custom button text</span>
+          <span className="hljs-string">&quot;Pay Now&quot;</span>,{" "}
+          <span className="hljs-comment">{"//"} Custom button text</span>
           {"\n"}
           {"  "}
           <span className="hljs-attr">defaultValues</span>: {"{"}
@@ -103,13 +103,13 @@ function Dev() {
           {"    "}
           <span className="hljs-attr">amount</span>:{" "}
           <span className="hljs-number">150.0</span>,{" "}
-          <span className="hljs-comment">// Pre-fill the amount field</span>
+          <span className="hljs-comment">{"//"} Pre-fill the amount field</span>
           {"\n"}
           {"    "}
           <span className="hljs-attr">description</span>:{" "}
-          <span className="hljs-string">"Product Purchase"</span>,{" "}
+          <span className="hljs-string">&quot;Product Purchase&quot;</span>,{" "}
           <span className="hljs-comment">
-            // Pre-fill the description field
+            {"//"} Pre-fill the description field
           </span>
           {"\n"}
           {"  "}
@@ -184,7 +184,7 @@ function Dev() {
             </td>
             <td>Custom text for the submit button.</td>
             <td>
-              <code>"Pay Now"</code>
+              <code>&quot;Pay Now&quot;</code>
             </td>
           </tr>
           <tr>
@@ -230,18 +230,18 @@ function Dev() {
           <span className="hljs-keyword">import</span>{" "}
           <span className="hljs-title class_">MzuniPay</span>{" "}
           <span className="hljs-keyword">from</span>{" "}
-          <span className="hljs-string">"mzunipay-sdk"</span>;{"\n"}
+          <span className="hljs-string">&quot;mzunipay-sdk&quot;</span>;{"\n"}
           {"\n"}
           <span className="hljs-keyword">const</span> mzuniPay ={" "}
           <span className="hljs-keyword">new</span>{" "}
           <span className="hljs-title class_">MzuniPay</span>(
-          <span className="hljs-string">"your-api-key-here"</span>);{"\n"}
+          <span className="hljs-string">&quot;your-api-key-here&quot;</span>);{"\n"}
           {"\n"}mzuniPay.
           <span className="hljs-title function_">renderForm</span>({"{"}
           {"\n"}
           {"  "}
           <span className="hljs-attr">containerId</span>:{" "}
-          <span className="hljs-string">"custom-payment-form"</span>,{"\n"}
+          <span className="hljs-string">&quot;custom-payment-form&quot;</span>,{"\n"}
           {"  "}
           <span className="hljs-attr">onSuccess</span>:{" "}
           <span className="hljs-function">
@@ -252,7 +252,7 @@ function Dev() {
           {"    "}
           <span className="hljs-variable language_">console</span>.
           <span className="hljs-title function_">log</span>(
-          <span className="hljs-string">"Payment Successful!"</span>, response);
+          <span className="hljs-string">&quot;Payment Successful!&quot;</span>, response);
           {"\n"}
           {"  "}
           {"}"},{"\n"}
@@ -266,18 +266,18 @@ function Dev() {
           {"    "}
           <span className="hljs-variable language_">console</span>.
           <span className="hljs-title function_">error</span>(
-          <span className="hljs-string">"Payment Failed!"</span>, error);{"\n"}
+          <span className="hljs-string">&quot;Payment Failed!&quot;</span>, error);{"\n"}
           {"  "}
           {"}"},{"\n"}
           {"  "}
           <span className="hljs-attr">styled</span>:{" "}
           <span className="hljs-literal">true</span>,{" "}
-          <span className="hljs-comment">// Use styled form</span>
+          <span className="hljs-comment">{"//"} Use styled form</span>
           {"\n"}
           {"  "}
           <span className="hljs-attr">buttonText</span>:{" "}
-          <span className="hljs-string">"Submit Payment"</span>,{" "}
-          <span className="hljs-comment">// Custom button text</span>
+          <span className="hljs-string">&quot;Submit Payment&quot;</span>,{" "}
+          <span className="hljs-comment">{"//"} Custom button text</span>
           {"\n"}
           {"  "}
           <span className="hljs-attr">defaultValues</span>: {"{"}
@@ -287,7 +287,7 @@ function Dev() {
           <span className="hljs-number">200.0</span>,{"\n"}
           {"    "}
           <span className="hljs-attr">description</span>:{" "}
-          <span className="hljs-string">"Order #1234"</span>,{"\n"}
+          <span className="hljs-string">&quot;Order #1234&quot;</span>,{"\n"}
           {"  "}
           {"}"},{"\n"}
           {"  "}
@@ -298,13 +298,13 @@ function Dev() {
           {"\n"}
           {"      "}
           <span className="hljs-attr">backgroundColor</span>:{" "}
-          <span className="hljs-string">"#f9f9f9"</span>,{"\n"}
+          <span className="hljs-string">&quot;#f9f9f9&quot;</span>,{"\n"}
           {"      "}
           <span className="hljs-attr">padding</span>:{" "}
-          <span className="hljs-string">"20px"</span>,{"\n"}
+          <span className="hljs-string">&quot;20px&quot;</span>,{"\n"}
           {"      "}
           <span className="hljs-attr">borderRadius</span>:{" "}
-          <span className="hljs-string">"8px"</span>,{"\n"}
+          <span className="hljs-string">&quot;8px&quot;</span>,{"\n"}
           {"    "}
           {"}"},{"\n"}
           {"    "}
@@ -312,10 +312,10 @@ function Dev() {
           {"\n"}
           {"      "}
           <span className="hljs-attr">padding</span>:{" "}
-          <span className="hljs-string">"10px"</span>,{"\n"}
+          <span className="hljs-string">&quot;10px&quot;</span>,{"\n"}
           {"      "}
           <span className="hljs-attr">border</span>:{" "}
-          <span className="hljs-string">"1px solid #ddd"</span>,{"\n"}
+          <span className="hljs-string">&quot;1px solid #ddd&quot;</span>,{"\n"}
           {"    "}
           {"}"},{"\n"}
           {"    "}
@@ -323,10 +323,10 @@ function Dev() {
           {"\n"}
           {"      "}
           <span className="hljs-attr">backgroundColor</span>:{" "}
-          <span className="hljs-string">"#007bff"</span>,{"\n"}
+          <span className="hljs-string">&quot;#007bff&quot;</span>,{"\n"}
           {"      "}
           <span className="hljs-attr">color</span>:{" "}
-          <span className="hljs-string">"#fff"</span>,{"\n"}
+          <span className="hljs-string">&quot;#fff&quot;</span>,{"\n"}
           {"    "}
           {"}"},{"\n"}
           {"    "}
@@ -334,10 +334,10 @@ function Dev() {
           {"\n"}
           {"      "}
           <span className="hljs-attr">marginTop</span>:{" "}
-          <span className="hljs-string">"10px"</span>,{"\n"}
+          <span className="hljs-string">&quot;10px&quot;</span>,{"\n"}
           {"      "}
           <span className="hljs-attr">fontSize</span>:{" "}
-          <span className="hljs-string">"14px"</span>,{"\n"}
+          <span className="hljs-string">&quot;14px&quot;</span>,{"\n"}
           {"    "}
           {"}"},{"\n"}
           {"  "}
@@ -392,7 +392,7 @@ function Dev() {
             &lt;<span className="hljs-name">script</span>{" "}
             <span className="hljs-attr">src</span>=
             <span className="hljs-string">
-              "https://cdn.jsdelivr.net/npm/mzunipay-sdk/dist/index.umd.js"
+            &quot;https:{"//"}cdn.jsdelivr.net/npm/mzunipay-sdk/dist/index.umd.js&quot;
             </span>
             &gt;
           </span>
@@ -412,7 +412,7 @@ function Dev() {
           <span className="hljs-tag">
             &lt;<span className="hljs-name">div</span>{" "}
             <span className="hljs-attr">id</span>=
-            <span className="hljs-string">"payment-form-container"</span>&gt;
+            <span className="hljs-string">&quot;payment-form-container&quot;</span>&gt;
           </span>
           <span className="hljs-tag">
             &lt;/<span className="hljs-name">div</span>&gt;
@@ -428,13 +428,13 @@ function Dev() {
             <span className="hljs-keyword">const</span> mzuniPay ={" "}
             <span className="hljs-keyword">new</span>{" "}
             <span className="hljs-title class_">MzuniPay</span>(
-            <span className="hljs-string">"your-api-key-here"</span>);{"\n"}
+            <span className="hljs-string">&quot;your-api-key-here&quot;</span>);{"\n"}
             {"    "}mzuniPay.
             <span className="hljs-title function_">renderForm</span>({"{"}
             {"\n"}
             {"      "}
             <span className="hljs-attr">containerId</span>:{" "}
-            <span className="hljs-string">"payment-form-container"</span>,{"\n"}
+            <span className="hljs-string">&quot;payment-form-container&quot;</span>,{"\n"}
             {"      "}
             <span className="hljs-attr">onSuccess</span>:{" "}
             <span className="hljs-function">
@@ -442,7 +442,7 @@ function Dev() {
             </span>{" "}
             <span className="hljs-variable language_">console</span>.
             <span className="hljs-title function_">log</span>(
-            <span className="hljs-string">"Success:"</span>, response),{"\n"}
+            <span className="hljs-string">&quot;Success:&quot;</span>, response),{"\n"}
             {"      "}
             <span className="hljs-attr">onError</span>:{" "}
             <span className="hljs-function">
@@ -450,13 +450,13 @@ function Dev() {
             </span>{" "}
             <span className="hljs-variable language_">console</span>.
             <span className="hljs-title function_">error</span>(
-            <span className="hljs-string">"Error:"</span>, error),{"\n"}
+            <span className="hljs-string">&quot;Error:&quot;</span>, error),{"\n"}
             {"      "}
             <span className="hljs-attr">styled</span>:{" "}
             <span className="hljs-literal">true</span>,{"\n"}
             {"      "}
             <span className="hljs-attr">buttonText</span>:{" "}
-            <span className="hljs-string">"Submit"</span>,{"\n"}
+            <span className="hljs-string">&quot;Submit&quot;</span>,{"\n"}
             {"      "}
             <span className="hljs-attr">defaultValues</span>: {"{"}
             {"\n"}
@@ -465,7 +465,7 @@ function Dev() {
             <span className="hljs-number">100.0</span>,{"\n"}
             {"        "}
             <span className="hljs-attr">description</span>:{" "}
-            <span className="hljs-string">"Purchase Item A"</span>,{"\n"}
+            <span className="hljs-string">&quot;Purchase Item A&quot;</span>,{"\n"}
             {"      "}
             {"}"},{"\n"}
             {"      "}
@@ -474,9 +474,9 @@ function Dev() {
             {"        "}
             <span className="hljs-attr">button</span>: {"{"}{" "}
             <span className="hljs-attr">backgroundColor</span>:{" "}
-            <span className="hljs-string">"blue"</span>,{" "}
+            <span className="hljs-string">&quot;blue&quot;</span>,{" "}
             <span className="hljs-attr">color</span>:{" "}
-            <span className="hljs-string">"white"</span> {"}"},{"\n"}
+            <span className="hljs-string">&quot;white&quot;</span> {"}"},{"\n"}
             {"      "}
             {"}"},{"\n"}
             {"    "}
@@ -497,7 +497,7 @@ function Dev() {
       <h2>Notes</h2>
       <ol>
         <li>
-          Replace <code>"your-api-key-here"</code> with your actual API key.
+          Replace <code>&quot;your-api-key-here&quot;</code> with your actual API key.
         </li>
         <li>
           Ensure the container ID (e.g., <code>payment-form-container</code>)
