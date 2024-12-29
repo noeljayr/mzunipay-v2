@@ -99,7 +99,7 @@ function Signup() {
             <b>Merchant</b>
           </div>
         </div>
-        <div className="grid gap-3 first-last">
+        <div className="grid gap-3 first-last w-full">
           <div className=" input-group flex-col gap-2">
             <input
               value={first_name}
