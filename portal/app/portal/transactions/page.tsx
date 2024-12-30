@@ -14,6 +14,7 @@ import Error from "@/components/ux/Error";
 import { getCookie } from "cookies-next/client";
 import { BASE_URL } from "@/constants/constants";
 import { useRouter, useSearchParams } from "next/navigation";
+import Refund from "@/components/Modals/Refund";
 
 
 type TransactionProps = {
@@ -272,6 +273,7 @@ function page() {
       </div>
 
       <TransactionDetails />
+      <Refund />
     </>
   );
 }

@@ -18,7 +18,7 @@ import { jwtDecode } from "jwt-decode";
 import { BASE_URL } from "@/constants/constants";
 import Error from "../ux/Error";
 import Loading from "../ux/Loading";
-
+import useRefundModalStore from "@/states/refundModalStore";
 
 type TokenTypes = {
   user_id: string;
@@ -53,25 +53,23 @@ function TransactionDetails() {
   const [isError, setIsError] = useState<boolean>(false);
   const [isNotFound, setNotFound] = useState<boolean>(false);
   const [refresh, setRefresh] = useState<boolean>(false);
+  const { setRefundModalActive } = useRefundModalStore();
 
   useEffect(() => {
     const fetchTransaction = async () => {
       setIsLoading(true);
       setNotFound(false);
-      setIsError(false)
+      setIsError(false);
 
       if (transactionModalActive) {
         try {
-          const response = await fetch(
-            `${BASE_URL}/transactions/${txId}`,
-            {
-              method: "GET",
-              headers: {
-                Authorization: `Bearer ${token}`,
-                "Content-Type": "application/json",
-              },
-            }
-          );
+          const response = await fetch(`${BASE_URL}/transactions/${txId}`, {
+            method: "GET",
+            headers: {
+              Authorization: `Bearer ${token}`,
+              "Content-Type": "application/json",
+            },
+          });
 
           if (response.status == 404) {
             setNotFound(true);
@@ -159,14 +157,20 @@ function TransactionDetails() {
           Details
         </h1>
 
-   
-
-        {
-          isLoading? <div className="flex h-full w-full items-center justify-center">
+        {isLoading ? (
+          <div className="flex h-full w-full items-center justify-center">
             <Loading />
-          </div>:
-        isError? <div onClick={()=>{setRefresh(!refresh)}} className="flex w-full h-full items-center justify-center"><Error /></div> :
-        isNotFound ? (
+          </div>
+        ) : isError ? (
+          <div
+            onClick={() => {
+              setRefresh(!refresh);
+            }}
+            className="flex w-full h-full items-center justify-center"
+          >
+            <Error />
+          </div>
+        ) : isNotFound ? (
           <span>Not found </span>
         ) : transaction ? (
           <>
@@ -232,6 +236,10 @@ function TransactionDetails() {
               </div>
 
               <div
+                onClick={() => {
+                  setTransactionModalActive();
+                  setRefundModalActive();
+                }}
                 className={`refund-btn content-container flex gap-2 w-28 items-center justify-center ${checkForRefundOption(
                   transaction.to_wallet_id,
                   transaction.transaction_type,
@@ -250,9 +258,9 @@ function TransactionDetails() {
                 <span>{formatDate(transaction.created_at)}</span>
               </span>
 
-              <span className="grid gap-2 truncate">
+              <span className="grid gap-2">
                 <span className="opacity-70">Description</span>
-                <span className="truncate">{transaction.description}</span>
+                <span className="">{transaction.description}</span>
               </span>
 
               <span className="grid gap-2 truncate">

@@ -12,8 +12,14 @@ import TotalRefunded from "@/components/overview/TotalRefunded";
 import NewCustomers from "@/components/overview/NewCustomers";
 import ReturningCustomers from "@/components/overview/ReturingCustomers";
 import TransactionDetails from "@/components/Modals/TransactionDetails";
-import { getCookie } from 'cookies-next/client';
+import { getCookie } from "cookies-next/client";
 import { jwtDecode } from "jwt-decode";
+import { Swiper, SwiperSlide } from "swiper/react";
+import "swiper/css";
+import "swiper/css/navigation";
+import "swiper/css/pagination";
+import { useEffect, useState } from "react";
+import Refund from "@/components/Modals/Refund";
 
 type TokenTypes = {
   user_id: string;
@@ -24,11 +30,17 @@ type TokenTypes = {
 };
 
 export default function Home() {
+  const token = getCookie("token");
 
-  const token = getCookie('token');
-  
-  if(token){
+  if (token) {
     const user: TokenTypes = jwtDecode(token);
+    const [width, setWidth] = useState(window.innerWidth);
+
+    useEffect(() => {
+      const handleResize = () => setWidth(window.innerWidth);
+      window.addEventListener("resize", handleResize);
+      return () => window.removeEventListener("resize", handleResize);
+    }, []);
 
     return (
       <div
@@ -42,10 +54,30 @@ export default function Home() {
         <TotalBalance />
         {user.account_type === "Merchant" ? (
           <div className="merchant-overview grid w-full h-full gap-4">
-            <TotalRevenue />
-            <TotalRefunded />
-            <NewCustomers />
-            <ReturningCustomers />
+            {width > 640 ? (
+              <>
+                <TotalRevenue />
+                <TotalRefunded />
+                <NewCustomers />
+                <ReturningCustomers />
+              </>
+            ) : (
+              <Swiper spaceBetween={15} slidesPerView={1.6}>
+                <SwiperSlide>
+                  {" "}
+                  <TotalRevenue />
+                </SwiperSlide>
+                <SwiperSlide>
+                  <TotalRefunded />
+                </SwiperSlide>
+                <SwiperSlide>
+                  <NewCustomers />
+                </SwiperSlide>
+                <SwiperSlide>
+                  <ReturningCustomers />
+                </SwiperSlide>
+              </Swiper>
+            )}
           </div>
         ) : (
           <CustomerMonthlyStats />
@@ -55,12 +87,12 @@ export default function Home() {
           }`}
         >
           <TransactionHistory />
-          
         </div>
         <Deposit />
         <Withdraw />
         <Transfer />
         <TransactionDetails />
+        <Refund />
       </div>
     );
   }

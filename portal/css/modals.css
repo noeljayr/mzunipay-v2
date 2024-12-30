@@ -131,7 +131,8 @@
 .modal-input-group div .tip svg path {
   stroke: var(--pending);
 }
-.modal-input-group input {
+.modal-input-group input,
+.modal-input-group textarea {
   height: 2.5rem;
   border-radius: var(--radius);
   padding: var(--padding);
@@ -141,6 +142,16 @@
   background-color: rgba(246, 254, 249, 0.5);
 }
 
+.modal-input-group textarea{
+  resize: none;
+  height: unset;
+  min-height: 5rem;
+}
+
+.reason{
+  border-bottom: 0px;
+}
+
 .modal-cta-container {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -148,6 +159,13 @@
   margin-left: auto;
   gap: 1rem;
   margin-top: auto;
+}
+
+@media not all and (min-width: 640px) {
+  .modal .mt-auto{
+    position: relative;
+    bottom: 4rem;
+  }
 }
 
 
@@ -266,8 +284,6 @@
   width: auto;
 }
 
-.modal .selected-user {
-}
 
 .modal .selected-user .avatar {
   height: 6rem;

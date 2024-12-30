@@ -98,7 +98,17 @@ function Transaction(props: TransactionProps) {
                 : ""}
             </span>
             <span className="info flex gap-2 items-center">
-              <span className={`status ${props.status === "Completed"? "success" : props.status === "Failed"? "failed" : "pending"}`}>{props.status}</span>
+              <span
+                className={`status ${
+                  props.status === "Completed"
+                    ? "success"
+                    : props.status === "Failed"
+                    ? "failed"
+                    : "pending"
+                }`}
+              >
+                {props.status}
+              </span>
               <b className="opacity-50">•</b>
               <span className="time">{formatDate(props.created_at)}</span>
             </span>

@@ -411,8 +411,12 @@ router.get("/:tx_id", apiAuth, async (req, res) => {
 });
 
 router.post("/refund", apiAuth, async (req, res) => {
-  const { original_transaction_id, refund_amount, reason } = req.body;
-  const refunded_by = req.user.user_id; // Assuming user info is available in the request after auth middleware
+  const { original_transaction_id, reason } = req.body;
+  const refunded_by = req.user.full_name;
+  const transaction = await Transaction.findOne({
+    tx_id: original_transaction_id,
+  });
+  refund_amount = transaction.amount;
 
   try {
     // Validate input
