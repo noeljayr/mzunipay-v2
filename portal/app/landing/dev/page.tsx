@@ -14,15 +14,16 @@ function Dev() {
       <pre className="hljs language-bash">
         <code>npm install mzunipay-sdk{"\n"}</code>
       </pre>
-      <h3>Using CDN (Vanilla JS)</h3>
-      <p>For vanilla JavaScript integration, include the SDK via a CDN:</p>
+      <h3>Using CDN (Normal JS)</h3>
+      <p>For Normal JavaScript integration, include the SDK via a CDN:</p>
       <pre className="hljs language-html">
         <code>
           <span className="hljs-tag">
             &lt;<span className="hljs-name">script</span>{" "}
             <span className="hljs-attr">src</span>=
             <span className="hljs-string">
-              &quot;https:{"//"}cdn.jsdelivr.net/npm/mzunipay-sdk@1.0.59/dist/index.umd.js&quot;
+              &quot;https:{"//"}
+              cdn.jsdelivr.net/npm/mzunipay-sdk@1.0.59/dist/index.umd.js&quot;
             </span>
             &gt;
           </span>
@@ -49,14 +50,20 @@ function Dev() {
           <span className="hljs-keyword">const</span> mzuniPay ={" "}
           <span className="hljs-keyword">new</span>{" "}
           <span className="hljs-title class_">MzuniPay</span>(
-          <span className="hljs-string">&quot;your-api-key-here&quot;</span>);{"\n"}
+          <span className="hljs-string">&quot;your-api-key-here&quot;</span>);
+          {"\n"}
           {"\n"}mzuniPay.
           <span className="hljs-title function_">renderForm</span>({"{"}
           {"\n"}
           {"  "}
           <span className="hljs-attr">containerId</span>:{" "}
-          <span className="hljs-string">&quot;payment-form-container&quot;</span>,{" "}
-          <span className="hljs-comment">{"//"} ID of the container element</span>
+          <span className="hljs-string">
+            &quot;payment-form-container&quot;
+          </span>
+          ,{" "}
+          <span className="hljs-comment">
+            {"//"} ID of the container element
+          </span>
           {"\n"}
           {"  "}
           <span className="hljs-attr">onSuccess</span>:{" "}
@@ -68,7 +75,8 @@ function Dev() {
           {"    "}
           <span className="hljs-variable language_">console</span>.
           <span className="hljs-title function_">log</span>(
-          <span className="hljs-string">&quot;Payment Successful!&quot;</span>, response);
+          <span className="hljs-string">&quot;Payment Successful!&quot;</span>,
+          response);
           {"\n"}
           {"  "}
           {"}"},{"\n"}
@@ -82,7 +90,8 @@ function Dev() {
           {"    "}
           <span className="hljs-variable language_">console</span>.
           <span className="hljs-title function_">error</span>(
-          <span className="hljs-string">&quot;Payment Failed!&quot;</span>, error);{"\n"}
+          <span className="hljs-string">&quot;Payment Failed!&quot;</span>,
+          error);{"\n"}
           {"  "}
           {"}"},{"\n"}
           {"  "}
@@ -235,13 +244,15 @@ function Dev() {
           <span className="hljs-keyword">const</span> mzuniPay ={" "}
           <span className="hljs-keyword">new</span>{" "}
           <span className="hljs-title class_">MzuniPay</span>(
-          <span className="hljs-string">&quot;your-api-key-here&quot;</span>);{"\n"}
+          <span className="hljs-string">&quot;your-api-key-here&quot;</span>);
+          {"\n"}
           {"\n"}mzuniPay.
           <span className="hljs-title function_">renderForm</span>({"{"}
           {"\n"}
           {"  "}
           <span className="hljs-attr">containerId</span>:{" "}
-          <span className="hljs-string">&quot;custom-payment-form&quot;</span>,{"\n"}
+          <span className="hljs-string">&quot;custom-payment-form&quot;</span>,
+          {"\n"}
           {"  "}
           <span className="hljs-attr">onSuccess</span>:{" "}
           <span className="hljs-function">
@@ -252,7 +263,8 @@ function Dev() {
           {"    "}
           <span className="hljs-variable language_">console</span>.
           <span className="hljs-title function_">log</span>(
-          <span className="hljs-string">&quot;Payment Successful!&quot;</span>, response);
+          <span className="hljs-string">&quot;Payment Successful!&quot;</span>,
+          response);
           {"\n"}
           {"  "}
           {"}"},{"\n"}
@@ -266,7 +278,8 @@ function Dev() {
           {"    "}
           <span className="hljs-variable language_">console</span>.
           <span className="hljs-title function_">error</span>(
-          <span className="hljs-string">&quot;Payment Failed!&quot;</span>, error);{"\n"}
+          <span className="hljs-string">&quot;Payment Failed!&quot;</span>,
+          error);{"\n"}
           {"  "}
           {"}"},{"\n"}
           {"  "}
@@ -379,7 +392,7 @@ function Dev() {
       <hr />
       <h2>Using with CDN</h2>
       <p>
-        For developers who prefer vanilla JavaScript or CDN-based integration:
+        For developers who prefer Normal JavaScript or CDN-based integration:
       </p>
       <pre className="hljs language-html">
         <code>
@@ -392,7 +405,8 @@ function Dev() {
             &lt;<span className="hljs-name">script</span>{" "}
             <span className="hljs-attr">src</span>=
             <span className="hljs-string">
-            &quot;https:{"//"}cdn.jsdelivr.net/npm/mzunipay-sdk/dist/index.umd.js&quot;
+              &quot;https:{"//"}
+              cdn.jsdelivr.net/npm/mzunipay-sdk/dist/index.umd.js&quot;
             </span>
             &gt;
           </span>
@@ -412,7 +426,10 @@ function Dev() {
           <span className="hljs-tag">
             &lt;<span className="hljs-name">div</span>{" "}
             <span className="hljs-attr">id</span>=
-            <span className="hljs-string">&quot;payment-form-container&quot;</span>&gt;
+            <span className="hljs-string">
+              &quot;payment-form-container&quot;
+            </span>
+            &gt;
           </span>
           <span className="hljs-tag">
             &lt;/<span className="hljs-name">div</span>&gt;
@@ -428,13 +445,17 @@ function Dev() {
             <span className="hljs-keyword">const</span> mzuniPay ={" "}
             <span className="hljs-keyword">new</span>{" "}
             <span className="hljs-title class_">MzuniPay</span>(
-            <span className="hljs-string">&quot;your-api-key-here&quot;</span>);{"\n"}
+            <span className="hljs-string">&quot;your-api-key-here&quot;</span>);
+            {"\n"}
             {"    "}mzuniPay.
             <span className="hljs-title function_">renderForm</span>({"{"}
             {"\n"}
             {"      "}
             <span className="hljs-attr">containerId</span>:{" "}
-            <span className="hljs-string">&quot;payment-form-container&quot;</span>,{"\n"}
+            <span className="hljs-string">
+              &quot;payment-form-container&quot;
+            </span>
+            ,{"\n"}
             {"      "}
             <span className="hljs-attr">onSuccess</span>:{" "}
             <span className="hljs-function">
@@ -442,7 +463,8 @@ function Dev() {
             </span>{" "}
             <span className="hljs-variable language_">console</span>.
             <span className="hljs-title function_">log</span>(
-            <span className="hljs-string">&quot;Success:&quot;</span>, response),{"\n"}
+            <span className="hljs-string">&quot;Success:&quot;</span>,
+            response),{"\n"}
             {"      "}
             <span className="hljs-attr">onError</span>:{" "}
             <span className="hljs-function">
@@ -450,7 +472,8 @@ function Dev() {
             </span>{" "}
             <span className="hljs-variable language_">console</span>.
             <span className="hljs-title function_">error</span>(
-            <span className="hljs-string">&quot;Error:&quot;</span>, error),{"\n"}
+            <span className="hljs-string">&quot;Error:&quot;</span>, error),
+            {"\n"}
             {"      "}
             <span className="hljs-attr">styled</span>:{" "}
             <span className="hljs-literal">true</span>,{"\n"}
@@ -465,7 +488,8 @@ function Dev() {
             <span className="hljs-number">100.0</span>,{"\n"}
             {"        "}
             <span className="hljs-attr">description</span>:{" "}
-            <span className="hljs-string">&quot;Purchase Item A&quot;</span>,{"\n"}
+            <span className="hljs-string">&quot;Purchase Item A&quot;</span>,
+            {"\n"}
             {"      "}
             {"}"},{"\n"}
             {"      "}
@@ -497,7 +521,8 @@ function Dev() {
       <h2>Notes</h2>
       <ol>
         <li>
-          Replace <code>&quot;your-api-key-here&quot;</code> with your actual API key.
+          Replace <code>&quot;your-api-key-here&quot;</code> with your actual
+          API key.
         </li>
         <li>
           Ensure the container ID (e.g., <code>payment-form-container</code>)
@@ -511,7 +536,6 @@ function Dev() {
           Test your integration in a staging environment before going live.
         </li>
       </ol>
-      
     </div>
   );
 }
