@@ -139,10 +139,10 @@ function NewCustomers() {
             }
           >
             {percentage < 0
-              ? `${percentage}%`
+              ? `${percentage.toFixed(2)}%`
               : percentage > 0
-              ? `+${percentage}%`
-              : `${percentage}%`}
+              ? `+${percentage.toFixed(2)}%`
+              : `${percentage.toFixed(2)}%`}
           </b>
           <span className="opacity-50">vs last {timeFrame}</span>
         </span>
