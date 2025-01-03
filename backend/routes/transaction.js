@@ -506,7 +506,7 @@ router.post("/refund", apiAuth, async (req, res) => {
       session.endSession();
 
       return res.status(200).json({
-        message: "Refund processed successfully",
+        message: "Refund successful",
         refund,
       });
     } catch (error) {

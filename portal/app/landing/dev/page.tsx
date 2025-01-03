@@ -22,7 +22,7 @@ function Dev() {
             &lt;<span className="hljs-name">script</span>{" "}
             <span className="hljs-attr">src</span>=
             <span className="hljs-string">
-              &quot;https:{"//"}cdn.jsdelivr.net/npm/mzunipay-sdk/dist/index.umd.js&quot;
+              &quot;https:{"//"}cdn.jsdelivr.net/npm/mzunipay-sdk@1.0.59/dist/index.umd.js&quot;
             </span>
             &gt;
           </span>

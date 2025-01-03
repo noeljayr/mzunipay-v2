@@ -237,7 +237,6 @@ function TransactionDetails() {
 
               <div
                 onClick={() => {
-                  setTransactionModalActive();
                   setRefundModalActive();
                 }}
                 className={`refund-btn content-container flex gap-2 w-28 items-center justify-center ${checkForRefundOption(

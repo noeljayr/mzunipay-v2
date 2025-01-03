@@ -30,6 +30,89 @@ type TokenTypes = {
   avatar: string;
 };
 
+function getActionText(
+  transactionType: string,
+  toWalletId: string,
+  userWalletId: string
+): string {
+  switch (transactionType) {
+    case "Payment":
+      return "Paid ";
+    case "Refund":
+      return "Refunded ";
+    case "Deposit":
+      return "Deposited ";
+    case "Withdrawal":
+      return "Withdrew ";
+    case "Peer-to-Peer":
+      return toWalletId === userWalletId ? "Received " : "Sent ";
+    default:
+      return "";
+  }
+}
+
+function getContextText(
+  transactionType: string,
+  toWalletId: string,
+  fromWalletId: string,
+  userWalletId: string
+): string {
+  switch (transactionType) {
+    case "Payment":
+      return "through merchant website";
+    case "Refund":
+      return toWalletId === userWalletId ? "By" : "";
+    case "Deposit":
+      return "to your wallet";
+    case "Withdrawal":
+      return "from your wallet";
+    case "Peer-to-Peer":
+      return toWalletId === userWalletId ? "from" : "to";
+    default:
+      return "";
+  }
+}
+
+function getEntityText(
+  transactionType: string,
+  toWalletId: string,
+  fromWalletId: string,
+  senderName: string,
+  receiverName: string,
+  userWalletId: string
+): string {
+  switch (transactionType) {
+    case "Payment":
+      return toWalletId === userWalletId
+        ? `by ${senderName}`
+        : `to ${receiverName}`;
+    case "Refund":
+      return toWalletId === userWalletId ? fromWalletId : receiverName;
+    case "Deposit":
+    case "Withdrawal":
+      return "";
+    case "Peer-to-Peer":
+      return toWalletId === userWalletId ? senderName : receiverName;
+    default:
+      return "";
+  }
+}
+
+function getStatusClass(status: string): string {
+  switch (status) {
+    case "Completed":
+      return "success";
+    case "Failed":
+      return "failed";
+    default:
+      return "pending";
+  }
+}
+
+function getTransactionSign(toWalletId: string, userWalletId: string): string {
+  return toWalletId === userWalletId ? "+" : "-";
+}
+
 function Transaction(props: TransactionProps) {
   const { setTransactionModalActive } = useTransactionDetailsModalStore();
   const { setTxId } = useTransactionIDStore();
@@ -50,63 +133,29 @@ function Transaction(props: TransactionProps) {
           <div className="flex flex-col gap-1">
             <span className="destination">
               <b>
-                {props.transaction_type === "Payment"
-                  ? "Paid "
-                  : props.transaction_type === "Refund"
-                  ? "Refunded "
-                  : props.transaction_type === "Deposit"
-                  ? "Deposited "
-                  : props.transaction_type === "Withdrawal"
-                  ? "Withdrew "
-                  : props.transaction_type === "Peer-to-Peer"
-                  ? props.to_wallet_id === user.wallet_id
-                    ? "Received "
-                    : "Sent "
-                  : ""}
+                {getActionText(
+                  props.transaction_type,
+                  props.to_wallet_id,
+                  user.wallet_id
+                )}
               </b>
-              {props.transaction_type === "Payment"
-                ? "through merchant website"
-                : props.transaction_type === "Refund"
-                ? props.to_wallet_id === user.wallet_id
-                  ? "By"
-                  : ""
-                : props.transaction_type === "Deposit"
-                ? "to your wallet"
-                : props.transaction_type === "Withdrawal"
-                ? "from your wallet"
-                : props.transaction_type === "Peer-to-Peer"
-                ? props.to_wallet_id === user.wallet_id
-                  ? "from"
-                  : "to"
-                : ""}{" "}
-              {props.transaction_type === "Payment"
-                ? props.to_wallet_id === user.wallet_id
-                  ? "by " + props.sender_name
-                  : "to " + props.reciever_name
-                : props.transaction_type === "Refund"
-                ? props.to_wallet_id === user.wallet_id
-                  ? props.from_wallet_id
-                  : props.reciever_name
-                : props.transaction_type === "Deposit"
-                ? ""
-                : props.transaction_type === "Withdrawal"
-                ? ""
-                : props.transaction_type === "Peer-to-Peer"
-                ? props.to_wallet_id === user.wallet_id
-                  ? props.sender_name
-                  : props.reciever_name
-                : ""}
+              {getContextText(
+                props.transaction_type,
+                props.to_wallet_id,
+                props.from_wallet_id,
+                user.wallet_id
+              )}{" "}
+              {getEntityText(
+                props.transaction_type,
+                props.to_wallet_id,
+                props.from_wallet_id,
+                props.sender_name,
+                props.reciever_name,
+                user.wallet_id
+              )}
             </span>
             <span className="info flex gap-2 items-center">
-              <span
-                className={`status ${
-                  props.status === "Completed"
-                    ? "success"
-                    : props.status === "Failed"
-                    ? "failed"
-                    : "pending"
-                }`}
-              >
+              <span className={`status ${getStatusClass(props.status)}`}>
                 {props.status}
               </span>
               <b className="opacity-50">•</b>
@@ -115,7 +164,7 @@ function Transaction(props: TransactionProps) {
           </div>
 
           <div className="amount font-medium">
-            {props.to_wallet_id === user.wallet_id ? "+" : "-"}{" "}
+            {getTransactionSign(props.to_wallet_id, user.wallet_id)}{" "}
             <span className="font-medium">
               K {formatAmountWithCommas(props.amount.toFixed(2))}
             </span>
@@ -124,6 +173,8 @@ function Transaction(props: TransactionProps) {
       </>
     );
   }
+
+  return null;
 }
 
 export default Transaction;

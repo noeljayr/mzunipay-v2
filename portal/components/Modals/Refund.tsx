@@ -5,8 +5,8 @@ import LoadingLight from "../ux/LoadingLight";
 import useRefundModalStore from "@/states/refundModalStore";
 import { BASE_URL } from "@/constants/constants";
 import { getCookie } from "cookies-next/client";
-import Loading from "../ux/Loading";
 import { useTransactionIDStore } from "@/states/transactionDetailsModalStore";
+import useBalanceChangeState from "@/states/balanceChangeStore";
 
 function Refund() {
   const token = getCookie("token");
@@ -18,6 +18,7 @@ function Refund() {
   const [showMessage, setShowMessage] = useState(false);
   const [reason, setReason] = useState("");
   const { txId } = useTransactionIDStore();
+  const { setBalanceState } = useBalanceChangeState();
 
   const handReasonChange = (e: any) => {
     setReason(e.target.value);
@@ -46,15 +47,17 @@ function Refund() {
       });
 
       const data = await response.json();
-      if (data.status === "success") {
+      if (response.ok) {
+        setShowMessage(true);
+        setStatusMessage(data.message);
+        setFailed(false);
         setSuccess(true);
-        setStatusMessage(data.message);
+        setBalanceState();
       } else {
-        setFailed(true);
+        setShowMessage(true);
         setStatusMessage(data.message);
+        setFailed(true);
       }
-      setShowMessage(true);
-      setIsLoading(false);
     } catch (error) {
       console.log(error);
     } finally {
@@ -85,7 +88,7 @@ function Refund() {
           Refund
         </h1>
 
-        <form onSubmit={refundTransaction} className="flex gap-4" action="">
+        <form className="flex gap-4" action="">
           {
             <div className="modal-input-group reason">
               <span className="label">Reason</span>
