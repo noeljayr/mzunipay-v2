@@ -23,7 +23,7 @@ function Dev() {
             <span className="hljs-attr">src</span>=
             <span className="hljs-string">
               &quot;https:{"//"}
-              cdn.jsdelivr.net/npm/mzunipay-sdk@1.0.59/dist/index.umd.js&quot;
+              cdn.jsdelivr.net/npm/mzunipay-sdk@latest/dist/index.umd.js&quot;
             </span>
             &gt;
           </span>
@@ -406,7 +406,7 @@ function Dev() {
             <span className="hljs-attr">src</span>=
             <span className="hljs-string">
               &quot;https:{"//"}
-              cdn.jsdelivr.net/npm/mzunipay-sdk/dist/index.umd.js&quot;
+              cdn.jsdelivr.net/npm/mzunipay-sdk@latest/dist/index.umd.js&quot;
             </span>
             &gt;
           </span>
