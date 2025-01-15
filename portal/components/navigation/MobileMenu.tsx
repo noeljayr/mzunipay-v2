@@ -1,8 +1,9 @@
-"use state";
+"use client";
 import { useMenuStore } from "@/states/menuStore";
 import {
   IconArrowLeft,
   IconBuildingBank,
+  IconDownload,
   IconSwitchVertical,
   IconX,
 } from "@tabler/icons-react";
@@ -12,6 +13,7 @@ import UpgradeCustomer from "../UpgradeCustomer";
 import { deleteCookie, getCookie } from "cookies-next/client";
 import { useRouter } from "next/navigation";
 import { jwtDecode } from "jwt-decode";
+import useWidthdrawModalStore from "@/states/withdrawModalStore";
 
 type TokenTypes = {
   user_id: string;
@@ -26,6 +28,7 @@ function MobileMenu() {
   const pathname = usePathname();
   const router = useRouter();
   const token = getCookie("token");
+  const { setWithdrawModalActive } = useWidthdrawModalStore();
 
   const logout = () => {
     deleteCookie("token");
@@ -56,6 +59,7 @@ function MobileMenu() {
               Close
             </span>
           </h1>
+
           <Link
             className={`${
               pathname.startsWith("/portal/transactions") ? "active-link" : ""
