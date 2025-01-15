@@ -87,7 +87,14 @@ function MobileMenu() {
 
           <span className="flex flex-col mt-auto">
             {user.account_type == "Merchant" ? <></> : <UpgradeCustomer />}
-            <button className="cta-2 w-full">Logout</button>
+            <button
+              onClick={() => {
+                logout();
+              }}
+              className="cta-2 w-full"
+            >
+              Logout
+            </button>
           </span>
         </div>
       </>
