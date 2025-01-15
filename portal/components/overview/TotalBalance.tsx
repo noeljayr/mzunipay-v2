@@ -1,13 +1,8 @@
 "use client";
 import {
-  IconDownload,
-  IconPlus,
   IconRefresh,
-  IconSwitchVertical,
 } from "@tabler/icons-react";
-import useDepositModalStore from "@/states/depositModalStore";
-import useWidthdrawModalStore from "@/states/withdrawModalStore";
-import useTransferModalStore from "@/states/transferModalStore";
+
 import NumberFlow from "@number-flow/react";
 import { useEffect, useState } from "react";
 import { getCookie, setCookie } from "cookies-next/client";
@@ -17,9 +12,6 @@ import useBalanceChangeState from "@/states/balanceChangeStore";
 
 function TotalBalance() {
   const token = getCookie("token");
-  const { setDepositModalActive } = useDepositModalStore();
-  const { setWithdrawModalActive } = useWidthdrawModalStore();
-  const { setTransferModalActive } = useTransferModalStore();
   const [balance, setBalance] = useState<number>(0);
   const [refresh, setRefresh] = useState(false);
   const [relativeTime, setRelativeTime] = useState<string>("");
@@ -104,21 +96,6 @@ function TotalBalance() {
             Last updated: {relativeTime || ""}
           </span>
         </span>
-      </div>
-
-      <div className="content-container gap-2 w-full grid quick-actions">
-        <button onClick={setDepositModalActive} className="cta-2">
-          <IconPlus />
-          Deposit
-        </button>
-        <button onClick={setTransferModalActive} className="cta-2">
-          <IconSwitchVertical />
-          Transfer
-        </button>
-        <button onClick={setWithdrawModalActive} className="cta-2">
-          <IconDownload />
-          Withdraw
-        </button>
       </div>
     </div>
   );

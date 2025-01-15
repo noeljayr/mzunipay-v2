@@ -8,8 +8,6 @@ import Deposit from "@/components/Modals/Deposit";
 import Withdraw from "@/components/Modals/Withdraw";
 import Transfer from "@/components/Modals/Transfer";
 import TotalRevenue from "@/components/overview/TotalRevenue";
-import TotalRefunded from "@/components/overview/TotalRefunded";
-import NewCustomers from "@/components/overview/NewCustomers";
 import ReturningCustomers from "@/components/overview/ReturingCustomers";
 import TransactionDetails from "@/components/Modals/TransactionDetails";
 import { getCookie } from "cookies-next/client";
@@ -48,37 +46,29 @@ export default function Home() {
         className={`index w-full ${
           user.account_type == "Merchant"
             ? "merchant-index custom-scrollbar"
-            : "customer-index"
+            : "customer-index custom-scrollbar"
         } grid w-full h-full gap-4`}
       >
         <TotalBalance />
         {user.account_type === "Merchant" ? (
-          <div className="merchant-overview grid w-full h-full gap-4">
-            {width > 640 ? (
-              <>
-                <TotalRevenue />
-                <TotalRefunded />
-                <NewCustomers />
-                <ReturningCustomers />
-              </>
-            ) : (
+          width > 640 ? (
+            <>
+              <TotalRevenue />
+              <ReturningCustomers />
+            </>
+          ) : (
+            <div className="merchant-overview grid w-full h-full gap-4">
               <Swiper spaceBetween={15} slidesPerView={1.6}>
                 <SwiperSlide>
                   {" "}
                   <TotalRevenue />
                 </SwiperSlide>
                 <SwiperSlide>
-                  <TotalRefunded />
-                </SwiperSlide>
-                <SwiperSlide>
-                  <NewCustomers />
-                </SwiperSlide>
-                <SwiperSlide>
                   <ReturningCustomers />
                 </SwiperSlide>
               </Swiper>
-            )}
-          </div>
+            </div>
+          )
         ) : (
           <CustomerMonthlyStats />
         )}

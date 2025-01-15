@@ -11,7 +11,7 @@ function NewCustomers() {
   const [optionsActive, setOptionsActive] = useState<boolean>(false);
   const [isError, setIsError] = useState<boolean>(false);
   const [refresh, setRefresh] = useState<boolean>(false);
-  const [returningCustomers, setReturningCustomers] = useState(0);
+  const [totalCustomers, setCustomers] = useState(0);
   const [period, setPeriod] = useState(timeFrame);
   const [percentage, setPercentage] = useState(0);
   const [loading, setLoading] = useState(false);
@@ -43,8 +43,8 @@ function NewCustomers() {
 
         if (response.ok) {
           setIsError(false);
-          setReturningCustomers(data.returningCustomers);
-          setPercentage(data.returningCustomersChange);
+          setCustomers(data.totalCustomers);
+          setPercentage(data.totalCustomersChange);
           updateBalance(); // Update last fetched timestamp
         } else {
           setIsError(true);
@@ -79,7 +79,7 @@ function NewCustomers() {
   return (
     <div className="content-container flex flex-col gap-2">
       <span className="flex">
-        <h3 className="opacity-70"> Returning Customers</h3>
+        <h3 className="opacity-70"> Customers</h3>
 
         <span
           onClick={() => {
@@ -128,7 +128,7 @@ function NewCustomers() {
             }}
             trend={0}
             locales={"en-US"}
-            value={returningCustomers || 0}
+            value={totalCustomers || 0}
             className="overview-number"
           />
         </h2>

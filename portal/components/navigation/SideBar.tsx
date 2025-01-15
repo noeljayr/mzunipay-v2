@@ -1,17 +1,16 @@
 "use client";
 
 import Link from "next/link";
-import {
-  IconHome,
-  IconSwitchVertical,
-  IconCode,
-} from "@tabler/icons-react";
 import "@/css/sidebar.css";
 import { usePathname } from "next/navigation";
-
+import useDepositModalStore from "@/states/depositModalStore";
+import useWidthdrawModalStore from "@/states/withdrawModalStore";
+import useTransferModalStore from "@/states/transferModalStore";
 import { getCookie } from "cookies-next/client";
 import { jwtDecode } from "jwt-decode";
 import UpgradeCustomer from "../UpgradeCustomer";
+
+import { IconHome, IconPlus, IconDownload, IconBuildingBank, IconArrowUp, IconSwitchVertical } from "@tabler/icons-react";
 
 type TokenTypes = {
   user_id: string;
@@ -24,6 +23,9 @@ type TokenTypes = {
 function SideBar() {
   const pathname = usePathname();
   const token = getCookie("token");
+  const { setDepositModalActive } = useDepositModalStore();
+  const { setWithdrawModalActive } = useWidthdrawModalStore();
+  const { setTransferModalActive } = useTransferModalStore();
 
   if (pathname.startsWith("/landing/")) {
     return <></>;
@@ -51,53 +53,32 @@ function SideBar() {
           Transactions
         </Link>
 
-        {user.account_type === "Merchant" ? (
-          <>
-            {/* <Link
-              className={`${
-                pathname.startsWith("/customers") ? "active-link" : ""
-              }`}
-              href="/customers"
-            >
-              <IconUsersGroup />
-              Customers
-            </Link> */}
+        <Link onClick={setDepositModalActive} href="">
+        <IconPlus />  
+          Deposit
+        </Link>
 
-            <span
-              className={`flex flex-col  gap-1 relative ${
-                pathname.startsWith("/portal/dev") ? "active-link" : ""
-              }`}
-            >
-              <span className="flex gap-2 w-full">
-                <IconCode />
-                Developer
-              </span>
+        <Link onClick={setTransferModalActive} href="">
+        <IconArrowUp />
+          Transfer
+        </Link>
 
-              <span className="flex flex-col sub">
-                <Link
-                  className={`w-full pl-7 ${
-                    pathname.startsWith("/portal/apis") ? "active-link" : ""
-                  }`}
-                  href="/portal/apis"
-                >
-                  API
-                </Link>
+        <Link onClick={setWithdrawModalActive} href="">
+        <IconDownload />
+          Withdraw
+        </Link>
 
-                <Link className={`w-full pl-7 `} href="/landing/dev">
-                  Documentation
-                </Link>
-              </span>
-            </span>
-          </>
-        ) : (
-          <></>
-        )}
+        <Link
+          className={`${
+            pathname.startsWith("/portal/finance") ? "active-link" : ""
+          }`}
+          href="#"
+        >
+          <IconBuildingBank />
+          Financial Services
+        </Link>
 
-        {user.account_type == "Merchant" ? (
-          <></>
-        ) : (
-         <UpgradeCustomer />
-        )}
+        {user.account_type == "Merchant" ? <></> : <UpgradeCustomer />}
       </div>
     );
   }

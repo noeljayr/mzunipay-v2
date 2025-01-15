@@ -27,7 +27,12 @@
   .modal-active {
     width: 100vw;
   }
+  .mobile-menu-modal{
+    width:13rem;
+  }
 }
+
+
 
 .transfer-modal {
   display: grid;
@@ -165,6 +170,11 @@
   .modal .mt-auto{
     position: relative;
     bottom: 4rem;
+  }
+
+  .mobile-menu-modal .mt-auto{
+    position: relative;
+    bottom: 0rem;
   }
 }
 

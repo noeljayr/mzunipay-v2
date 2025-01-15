@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
+import Loading from "../ux/Loading";
 import { Line } from "react-chartjs-2";
 import {
   Chart as ChartJS,
@@ -160,10 +161,6 @@ function CustomerMonthlyStats() {
     },
   };
 
-  if (loading) {
-    return <div>Loading...</div>;
-  }
-
   return (
     <div className="content-container flex flex-col monthly-stats">
       <h3 className="opacity-70">Monthly Stats</h3>
@@ -177,13 +174,23 @@ function CustomerMonthlyStats() {
           Cash out
         </span>
       </div>
-      <div style={{ width: "100%", height: "95%" }}>
-        {chartData ? (
-          <Line data={chartData} options={options} />
-        ) : (
-          <div>No data available</div>
-        )}
-      </div>
+      {loading ? (
+        <div className="flex h-full w-full items-center justify-center">
+          <Loading />
+        </div>
+      ) : (
+        <div style={{ width: "100%", height: "95%" }}>
+          {chartData ? (
+            <Line data={chartData} options={options} />
+          ) : (
+            <div className="h-full w-full flex items-center justify-center">
+              <span className="success">
+              Your monthly stats will show here.
+              </span>
+            </div>
+          )}
+        </div>
+      )}
     </div>
   );
 }

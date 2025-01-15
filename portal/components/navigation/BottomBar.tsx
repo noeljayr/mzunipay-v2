@@ -3,9 +3,15 @@
 import "@/css/bottombar.css";
 import Link from "next/link";
 import Image from "next/image";
-import { IconHome, IconSwitchVertical } from "@tabler/icons-react";
+import {
+  IconArrowUp,
+  IconDownload,
+  IconHome,
+  IconMenu2,
+  IconPlus,
+  IconSwitchVertical,
+} from "@tabler/icons-react";
 import { usePathname } from "next/navigation";
-
 
 import { IconChevronDown } from "@tabler/icons-react";
 import { useState, useEffect } from "react";
@@ -13,6 +19,10 @@ import { useState, useEffect } from "react";
 import { getCookie, deleteCookie } from "cookies-next/client";
 import { jwtDecode } from "jwt-decode"; // Correct the import, as `jwtDecode` is the default export
 import { useRouter } from "next/navigation";
+import useDepositModalStore from "@/states/depositModalStore";
+import useWidthdrawModalStore from "@/states/withdrawModalStore";
+import useTransferModalStore from "@/states/transferModalStore";
+import { useMenuStore } from "@/states/menuStore";
 
 type TokenTypes = {
   user_id: string;
@@ -26,6 +36,10 @@ function BottomBar() {
   const pathname = usePathname();
   const [decoded, setDecoded] = useState<TokenTypes | null>(null); // State to store the decoded token
   const router = useRouter();
+  const { setDepositModalActive } = useDepositModalStore();
+  const { setWithdrawModalActive } = useWidthdrawModalStore();
+  const { setTransferModalActive } = useTransferModalStore();
+  const { setMenuActive } = useMenuStore();
 
   const logout = () => {
     deleteCookie("token");
@@ -61,17 +75,27 @@ function BottomBar() {
         Home
       </Link>
 
-      <Link
-        className={`${
-          pathname.startsWith("/portal/transactions") ? "active-link" : ""
-        }`}
-        href="/portal/transactions"
-      >
-        <IconSwitchVertical />
-        Transactions
+      <Link onClick={setDepositModalActive} href="#">
+        <IconPlus />
+        Deposit
       </Link>
 
-      <Link
+      <Link onClick={setTransferModalActive} href="#">
+        <IconArrowUp />
+        Transfer
+      </Link>
+
+      <Link onClick={setWithdrawModalActive} href="#">
+      <IconDownload />
+        Withdraw
+      </Link>
+
+      <div onClick={setMenuActive} className="cursor-pointer">
+        <IconMenu2 />
+        
+      </div>
+
+      {/* <Link
         href="#"
         className="profile-icon flex gap-2 items-center p-1 cursor-pointer"
       >
@@ -81,7 +105,7 @@ function BottomBar() {
             alt="name"
           />
         </span>
-      </Link>
+      </Link> */}
     </div>
   );
 }

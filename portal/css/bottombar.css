@@ -6,12 +6,10 @@
 }
 
 @media not all and (max-width: 640px) {
-  .bottombar{
+  .bottombar {
     display: none;
   }
 }
-
-
 
 .bottombar a {
   display: flex;
@@ -21,9 +19,9 @@
   font-size: 0.45rem;
 }
 
-.bottombar svg {
-  height: 1.5rem;
-  width: 1.5rem;
+.bottombar a svg {
+  height: 1rem;
+  width: 1rem;
 }
 
 .bottombar .active-link {
@@ -48,4 +46,20 @@
 .bottombar .profile-icon img {
   width: 1.5rem;
   height: auto;
+}
+
+
+.mobile-menu-modal a{
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+}
+
+.mobile-menu-modal .cta-2{
+  width: 100%;
+}
+
+.mobile-menu-modal a svg{
+  height: 1rem;
+  width: 1rem;
 }

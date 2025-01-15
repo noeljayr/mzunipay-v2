@@ -1,7 +1,4 @@
-"use client"
-
-
-
+"use client";
 
 import "@/css/modals.css";
 import BottomBar from "@/components/navigation/BottomBar";
@@ -9,6 +6,8 @@ import Topbar from "@/components/navigation/Topbar";
 import SideBar from "@/components/navigation/SideBar";
 import { jwtDecode } from "jwt-decode";
 import { getCookie } from "cookies-next/client";
+import { useMenuStore } from "@/states/menuStore";
+import MobileMenu from "@/components/navigation/MobileMenu";
 
 type TokenTypes = {
   user_id: string;
@@ -18,15 +17,13 @@ type TokenTypes = {
   avatar: string;
 };
 
-
-
 export default function PortalLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-
   const token = getCookie("token");
+  const { menuActive } = useMenuStore();
 
   if (token) {
     const user: TokenTypes = jwtDecode(token);
@@ -35,6 +32,7 @@ export default function PortalLayout({
       <div className={"h-screen"} suppressHydrationWarning>
         <div className="main">
           <Topbar />
+          <MobileMenu />
           <div
             className={`main-content ${
               user.account_type === "Customer" ? "customer-content" : ""

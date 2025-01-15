@@ -80,7 +80,7 @@ function Signup() {
             className={`${account_type === "Customer" ? "selected" : ""}`}
           >
             <span className="selected-indicator"></span>
-            <span className="icon">
+            <span className="icon mb-1">
               <IconUser />
             </span>
             <b>Personal</b>
@@ -93,10 +93,10 @@ function Signup() {
             className={`${account_type === "Merchant" ? "selected" : ""}`}
           >
             <span className="selected-indicator"></span>
-            <span className="icon">
+            <span className="icon mb-1">
               <IconBuildingStore />
             </span>
-            <b>Merchant</b>
+            <b>Business</b>
           </div>
         </div>
         <div className="grid gap-3 first-last w-full">

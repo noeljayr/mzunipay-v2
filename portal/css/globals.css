@@ -202,7 +202,7 @@ body {
   height: 100%;
   width: 100%;
   overflow: hidden;
-  grid-template-columns: 7rem 1fr;
+  grid-template-columns: 9rem 1fr;
 }
 
 .customer-content {
