@@ -85,14 +85,8 @@ function BottomBar() {
         Transfer
       </Link>
 
-      <Link onClick={setWithdrawModalActive} href="#">
-      <IconDownload />
-        Withdraw
-      </Link>
-
       <div onClick={setMenuActive} className="cursor-pointer">
         <IconMenu2 />
-        
       </div>
 
       {/* <Link

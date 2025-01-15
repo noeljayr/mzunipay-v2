@@ -70,6 +70,11 @@ function MobileMenu() {
             Transactions
           </Link>
 
+          <Link onClick={setWithdrawModalActive} href="#">
+            <IconDownload />
+            Withdraw
+          </Link>
+
           <Link
             className={` ${
               pathname.startsWith("/portal/finance") ? "active-link" : ""
