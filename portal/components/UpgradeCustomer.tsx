@@ -66,7 +66,7 @@ function UpgradeCustomer() {
   };
 
   return (
-    <div className="upgrade-to-merchant mb-4 flex gap-1 mt-auto flex-col p-2 py-3 items-center">
+    <div className="upgrade-to-merchant mb-4 max-sm:mb-0 flex gap-1 mt-auto flex-col p-2 py-3 items-center">
       {confirm ? (
         <div className="flex items-center flex-col justify-center h-full w-full">
           <h3 className="text-center">Upgrading to business account</h3>

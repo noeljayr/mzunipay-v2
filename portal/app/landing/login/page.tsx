@@ -100,7 +100,7 @@ function Login() {
         )}
 
         <button disabled={isLoading} className="cta">
-          {isLoading ? <LoadingLight /> : isError ? "Try again" : "Login"}
+          {isLoading ? <LoadingLight /> : isError ? "Try again": success? "Login" : "Login"}
         </button>
         <div className="flex just-between w-full">
           <Link className="mr-auto font-medium opacity-75" href="/landing/signup">

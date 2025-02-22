@@ -56,7 +56,7 @@ function Profile() {
 
   return (
     <>
-      <div className="profile-page custom-scrollbar flex flex-col gap-4">
+      <div className="profile-page w-full custom-scrollbar flex flex-col gap-4">
         <div className="content-container profile-overview flex gap-2 items-center">
           <span className="profile-icon flex items-center justify-center">
             <Image
@@ -84,7 +84,7 @@ function Profile() {
         </div>
 
         <div className="content-container flex flex-col personal-details">
-          <h3 className="flex items-center">
+          <h3 className="flex items-center mb-2">
             Personal Information
             <span
               onClick={setPersonalDetailsModalActive}
@@ -150,7 +150,7 @@ function Profile() {
         </div>
 
         <div className="content-container flex flex-col personal-details">
-          <h3 className="flex items-center">
+          <h3 className="flex items-center mb-2">
             Security
             <span
               onClick={setSecurityModalActive}

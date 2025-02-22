@@ -48,18 +48,24 @@
   height: auto;
 }
 
-
-.mobile-menu-modal a{
+.mobile-menu-modal a {
   display: flex;
   gap: 0.5rem;
   align-items: center;
 }
 
-.mobile-menu-modal .cta-2{
+.mobile-menu-modal .cta-2 {
   width: 100%;
 }
 
-.mobile-menu-modal a svg{
+.mobile-menu-modal a svg {
   height: 1rem;
   width: 1rem;
+}
+
+@media not all and (min-width: 640px) {
+  .mobile-menu-modal .mt-auto {
+    position: relative;
+    bottom: 2rem;
+  }
 }

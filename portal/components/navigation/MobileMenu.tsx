@@ -14,7 +14,7 @@ import { deleteCookie, getCookie } from "cookies-next/client";
 import { useRouter } from "next/navigation";
 import { jwtDecode } from "jwt-decode";
 import useWidthdrawModalStore from "@/context/withdrawModalStore";
-
+import Profile from "./Profile";
 type TokenTypes = {
   user_id: string;
   account_type: string;
@@ -87,14 +87,7 @@ function MobileMenu() {
 
           <span className="flex flex-col mt-auto">
             {user.account_type == "Merchant" ? <></> : <UpgradeCustomer />}
-            <button
-              onClick={() => {
-                logout();
-              }}
-              className="cta-2 w-full"
-            >
-              Logout
-            </button>
+            <Profile />
           </span>
         </div>
       </>

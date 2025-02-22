@@ -5,10 +5,9 @@ import { IconChevronDown } from "@tabler/icons-react";
 import { useState, useEffect } from "react";
 import Link from "next/link";
 import { getCookie, deleteCookie } from "cookies-next/client";
-import {jwtDecode} from "jwt-decode";
+import { jwtDecode } from "jwt-decode";
 import { useRouter } from "next/navigation";
 import usePersonalDetailsModalStore from "@/context/personalDetailsModal";
-
 
 type TokenTypes = {
   user_id: string;
@@ -22,8 +21,8 @@ function Profile() {
   const [profileOptionsActive, setProfileOptionsActive] = useState(false);
   const [decoded, setDecoded] = useState<TokenTypes | null>(null); // State to store the decoded token
   const router = useRouter();
-  const {detailsUpdated} = usePersonalDetailsModalStore()
-  
+  const { detailsUpdated } = usePersonalDetailsModalStore();
+
   const logout = () => {
     deleteCookie("token");
     router.push("/landing");
@@ -55,7 +54,7 @@ function Profile() {
         profileOptionsActive ? "profile-options-active" : ""
       } flex gap-2 items-center relative p-1`}
     >
-      <span className="cursor-pointer profile-icon">
+      <span className="cursor-pointer profile-icon max-sm:truncate">
         <Image
           src={require(`@/public/avatars/${decoded.avatar}.png`)}
           alt={decoded.full_name}
@@ -63,7 +62,9 @@ function Profile() {
           height={500}
         />
       </span>
-      <span className="cursor-pointer">{decoded.full_name}</span>
+      <span className="cursor-pointer max-sm:truncate">
+        {decoded.full_name}
+      </span>
       <IconChevronDown className="ml-auto cursor-pointer" />
 
       <div className="profile-options absolute flex flex-col">

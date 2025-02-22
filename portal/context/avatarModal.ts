@@ -1,14 +1,14 @@
-import { create } from 'zustand';
+import { create } from "zustand";
 
 interface AvatarModalState {
-    avatarModalActive: boolean;
-    setAvatarModalActive: () => void;
+  avatarModalActive: boolean;
+  setAvatarModalActive: () => void;
 }
 
-
 const useAvatarModalStore = create<AvatarModalState>((set) => ({
-    avatarModalActive: true,
-    setAvatarModalActive: () => set((state) => ({avatarModalActive: !state.avatarModalActive})),
+  avatarModalActive: false,
+  setAvatarModalActive: () =>
+    set((state) => ({ avatarModalActive: !state.avatarModalActive })),
 }));
 
 export default useAvatarModalStore;
