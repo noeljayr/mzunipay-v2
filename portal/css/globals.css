@@ -19,7 +19,7 @@ html {
   --primary: #129549;
   --secondary: #8ee1ad;
   --border: rgba(142, 225, 173, 0.15);
-  --border-2: rgba(142, 225, 173, 0.5);
+  --border-2: rgba(142, 225, 173, 0.35);
   --danger: #c11209;
   --pending: #f0c63d;
   --font-l: 1rem;
@@ -27,7 +27,7 @@ html {
   --font-s: 0.75rem;
   --font-ss: 0.55rem;
   --font-xs: 0.5rem;
-  --radius: 0.4rem;
+  --radius: 0.55rem;
   --padding: 0.6rem;
   --transition: all 0.4s cubic-bezier(0.25, 0.1, 0.25, 1);
   --cta-2-hover: brightness(85%);
@@ -238,7 +238,7 @@ body {
   border-radius: var(--radius);
   border: 1px solid var(--border-2);
   position: relative;
-  background-color: var(--pure-white);
+  background-color: #ffffffa3;
 }
 
 .refresh-icon {
@@ -621,7 +621,6 @@ h1 .numberflow {
   }
 }
 
-
-.table-row-x{
+.table-row-x {
   height: 4rem;
 }

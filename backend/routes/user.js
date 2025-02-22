@@ -12,23 +12,17 @@ const cache = new NodeCache({ stdTTL: 300 });
 const avatars = [
   "bee",
   "butterfly",
-  "dog",
-  "fish",
+  "chameleon",
+  "crab",
   "flower-pot",
-  "fox",
-  "frog",
-  "hen",
-  "hippo",
-  "lion",
-  "monkey",
   "perch",
-  "rabbit",
+  "rubber-ring",
   "seal",
   "snail",
+  "squirrel",
   "sun",
-  "tortoise",
   "turtle",
-  "zebra",
+  "bear",
 ];
 
 // User Login
@@ -59,9 +53,10 @@ router.post("/login", async (req, res) => {
     const payload = {
       user_id: user.user_id,
       account_type: user.account_type,
-      wallet_id: wallet.wallet_id, 
-      full_name:  user.first_name + " " + user.last_name,
-      avatar: user.avatar
+      wallet_id: wallet.wallet_id,
+      full_name: user.first_name + " " + user.last_name,
+      avatar: user.avatar,
+      email: user.email,
     };
 
     const token = jwt.sign(payload, process.env.JWT_SECRET, {
@@ -87,7 +82,7 @@ router.post("/signup", async (req, res) => {
     // Check if user already exists
     const existingUser = await User.findOne({ email });
     if (existingUser) {
-      return res.status(400).json({ message: "Email already exists" });
+      return res.status(400).json({ message: "Email already taken" });
     }
 
     // Assign a random avatar
@@ -132,7 +127,6 @@ router.post("/signup", async (req, res) => {
 
 // Upgrade Customer to Merchant
 router.post("/upgrade-to-merchant", async (req, res) => {
-  
   const { user_id } = req.body;
 
   try {
@@ -167,9 +161,50 @@ router.post("/upgrade-to-merchant", async (req, res) => {
   }
 });
 
+router.post("/downgrade-from-merchant", async (req, res) => {
+  const { user_id } = req.body;
+
+  try {
+    // Find the user
+    const user = await User.findOne({ user_id });
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    // Check if user is actually a merchant
+    if (user.account_type !== "Merchant") {
+      return res.status(400).json({ message: "User is not a merchant" });
+    }
+
+    // Downgrade the account type (change to "Customer" or another type as desired)
+    user.account_type = "Customer";
+    await user.save();
+
+    // Find the active Merchant API key for this user and mark it as Revoked.
+    // Note: If you allow multiple keys per merchant, consider using updateMany.
+    const apiKeyRecord = await MerchantAPI.findOne({
+      merchant_user_id: user.user_id,
+      status: "Active",
+    });
+
+    if (apiKeyRecord) {
+      apiKeyRecord.status = "Revoked";
+      apiKeyRecord.updated_at = Date.now();
+      await apiKeyRecord.save();
+    }
+
+    res
+      .status(200)
+      .json({ message: "Account downgraded from merchant successfully" });
+  } catch (error) {
+    console.error("Error downgrading account: ", error);
+    res.status(500).json({ message: "Server error" });
+  }
+});
+
 // Edit User Information
 router.put("/edit-user", async (req, res) => {
-  const { first_name, last_name, phone, email, avatar, password } = req.body;
+  const { first_name, last_name, phone, email, avatar } = req.body;
 
   try {
     // Extract user_id from the JWT payload
@@ -196,14 +231,76 @@ router.put("/edit-user", async (req, res) => {
     if (email) user.email = email;
 
     // If a new password is provided, hash it before saving
-    if (password) {
-      user.password = await bcrypt.hash(password, 10);
-    }
 
     // Save updated user information
     await user.save();
 
-    res.status(200).json({ message: "User information updated successfully" });
+    const wallet = await Wallet.findOne({ user_id: user.user_id });
+    if (!wallet) {
+      return res.status(404).json({ message: "Wallet not found" });
+    }
+
+    const payload = {
+      user_id: user.user_id,
+      account_type: user.account_type,
+      wallet_id: wallet.wallet_id,
+      full_name: user.first_name + " " + user.last_name,
+      avatar: user.avatar,
+      email: user.email,
+    };
+
+    const newToken = jwt.sign(payload, process.env.JWT_SECRET, {
+      expiresIn: "1232320h",
+    });
+
+    res.status(200).json({
+      message: "Update successfully",
+      token: newToken,
+    });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Server error" });
+  }
+});
+
+router.put("/update-password", async (req, res) => {
+  try {
+   
+    const authHeader = req.headers.authorization;
+    if (!authHeader) {
+      return res.status(401).json({ message: "Authorization header missing" });
+    }
+    const token = authHeader.split(" ")[1];
+    const decoded = jwt.verify(token, process.env.JWT_SECRET);
+    const user_id = decoded.user_id;
+
+    // Get current and new passwords from the request body
+    const { currentPassword, newPassword } = req.body;
+    if (!currentPassword || !newPassword) {
+      return res
+        .status(400)
+        .json({
+          message: "Both currentPassword and newPassword are required.",
+        });
+    }
+
+    // Find the user in the database
+    const user = await User.findOne({ user_id });
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    // Check if the provided current password matches the stored hashed password
+    const isMatch = await bcrypt.compare(currentPassword, user.password);
+    if (!isMatch) {
+      return res.status(400).json({ message: "Incorrect current password." });
+    }
+
+    // Hash the new password and update the user's password field
+    user.password = newPassword;
+    await user.save();
+
+    res.status(200).json({ message: "Password updated successfully." });
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: "Server error" });
@@ -221,7 +318,7 @@ router.post("/reset-password", async (req, res) => {
     }
 
     // Hash the new password
-    user.password = await bcrypt.hash(new_password, 10);
+    user.password = new_password;
 
     // Save the updated user
     await user.save();

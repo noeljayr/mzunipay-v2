@@ -2,11 +2,11 @@
 import { IconArrowLeft } from "@tabler/icons-react";
 import { useState } from "react";
 import LoadingLight from "../ux/LoadingLight";
-import useRefundModalStore from "@/states/refundModalStore";
+import useRefundModalStore from "@/context/refundModalStore";
 import { BASE_URL } from "@/constants/constants";
 import { getCookie } from "cookies-next/client";
-import { useTransactionIDStore } from "@/states/transactionDetailsModalStore";
-import useBalanceChangeState from "@/states/balanceChangeStore";
+import { useTransactionIDStore } from "@/context/transactionDetailsModalStore";
+import useBalanceChangeState from "@/context/balanceChangeStore";
 
 function Refund() {
   const token = getCookie("token");

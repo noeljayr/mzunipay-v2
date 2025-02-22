@@ -4,9 +4,6 @@ import "@/css/overview.css";
 import TransactionHistory from "@/components/transactions/TransactionHistory";
 import TotalBalance from "@/components/overview/TotalBalance";
 import CustomerMonthlyStats from "@/components/charts/CustomerMonthlyStats";
-import Deposit from "@/components/Modals/Deposit";
-import Withdraw from "@/components/Modals/Withdraw";
-import Transfer from "@/components/Modals/Transfer";
 import TotalRevenue from "@/components/overview/TotalRevenue";
 import ReturningCustomers from "@/components/overview/ReturingCustomers";
 import TransactionDetails from "@/components/Modals/TransactionDetails";
@@ -78,11 +75,7 @@ export default function Home() {
         >
           <TransactionHistory />
         </div>
-        <Deposit />
-        <Withdraw />
-        <Transfer />
-        <TransactionDetails />
-        <Refund />
+        
       </div>
     );
   }

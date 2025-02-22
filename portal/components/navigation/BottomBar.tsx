@@ -19,10 +19,10 @@ import { useState, useEffect } from "react";
 import { getCookie, deleteCookie } from "cookies-next/client";
 import { jwtDecode } from "jwt-decode"; // Correct the import, as `jwtDecode` is the default export
 import { useRouter } from "next/navigation";
-import useDepositModalStore from "@/states/depositModalStore";
-import useWidthdrawModalStore from "@/states/withdrawModalStore";
-import useTransferModalStore from "@/states/transferModalStore";
-import { useMenuStore } from "@/states/menuStore";
+import useDepositModalStore from "@/context/depositModalStore";
+import useWidthdrawModalStore from "@/context/withdrawModalStore";
+import useTransferModalStore from "@/context/transferModalStore";
+import { useMenuStore } from "@/context/menuStore";
 
 type TokenTypes = {
   user_id: string;
@@ -75,12 +75,12 @@ function BottomBar() {
         Home
       </Link>
 
-      <Link onClick={setDepositModalActive} href="#">
+      <Link onClick={setDepositModalActive} href="#deposit">
         <IconPlus />
         Deposit
       </Link>
 
-      <Link onClick={setTransferModalActive} href="#">
+      <Link onClick={setTransferModalActive} href="#transfer">
         <IconArrowUp />
         Transfer
       </Link>

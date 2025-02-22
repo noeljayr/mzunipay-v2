@@ -5,7 +5,7 @@ import { formatAmountWithCommas } from "@/utils/formatNumber";
 import {
   useTransactionDetailsModalStore,
   useTransactionIDStore,
-} from "@/states/transactionDetailsModalStore";
+} from "@/context/transactionDetailsModalStore";
 
 import { getCookie } from "cookies-next/client";
 import { jwtDecode } from "jwt-decode";

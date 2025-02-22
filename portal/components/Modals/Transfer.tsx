@@ -8,7 +8,7 @@ import {
 } from "@tabler/icons-react";
 import { useEffect, useState } from "react";
 import LoadingLight from "../ux/LoadingLight";
-import useTransferModalStore from "@/states/transferModalStore";
+import useTransferModalStore from "@/context/transferModalStore";
 import Image from "next/image";
 import NumberFlow from "@number-flow/react";
 import { formatAmountWithCommas } from "@/utils/formatNumber";
@@ -17,7 +17,7 @@ import { jwtDecode } from "jwt-decode";
 import { BASE_URL } from "@/constants/constants";
 import Loading from "../ux/Loading";
 import defaultAvatar from "@/public/avatars/default.png";
-import useBalanceChangeState from "@/states/balanceChangeStore";
+import useBalanceChangeState from "@/context/balanceChangeStore";
 
 type userTypes = {
   user: {

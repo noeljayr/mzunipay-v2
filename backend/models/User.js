@@ -14,6 +14,11 @@ const userSchema = new mongoose.Schema({
     enum: ["Customer", "Merchant", "Admin"],
     required: true,
   },
+  status: { type: String, default: "Inactive" },
+  twoFA: {
+    type: Boolean,
+    default: false,
+  },
   avatar: { type: String, required: true },
   created_at: { type: Date, default: Date.now },
   updated_at: { type: Date, default: Date.now },

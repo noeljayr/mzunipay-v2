@@ -6,8 +6,13 @@ import Topbar from "@/components/navigation/Topbar";
 import SideBar from "@/components/navigation/SideBar";
 import { jwtDecode } from "jwt-decode";
 import { getCookie } from "cookies-next/client";
-import { useMenuStore } from "@/states/menuStore";
+import { useMenuStore } from "@/context/menuStore";
 import MobileMenu from "@/components/navigation/MobileMenu";
+import Deposit from "@/components/Modals/Deposit";
+import Withdraw from "@/components/Modals/Withdraw";
+import Transfer from "@/components/Modals/Transfer";
+import Refund from "@/components/Modals/Refund";
+import TransactionDetails from "@/components/Modals/TransactionDetails";
 
 type TokenTypes = {
   user_id: string;
@@ -43,6 +48,12 @@ export default function PortalLayout({
           </div>
         </div>
         <BottomBar />
+
+        <Deposit />
+        <Withdraw />
+        <Transfer />
+        <TransactionDetails />
+        <Refund />
       </div>
     );
   }

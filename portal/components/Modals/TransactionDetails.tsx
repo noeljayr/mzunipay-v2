@@ -8,7 +8,7 @@ import {
 import {
   useTransactionDetailsModalStore,
   useTransactionIDStore,
-} from "@/states/transactionDetailsModalStore";
+} from "@/context/transactionDetailsModalStore";
 import { transactions } from "@/constants/transactions";
 import { formatDate } from "@/utils/formatDate";
 import { useEffect, useState } from "react";
@@ -18,7 +18,7 @@ import { jwtDecode } from "jwt-decode";
 import { BASE_URL } from "@/constants/constants";
 import Error from "../ux/Error";
 import Loading from "../ux/Loading";
-import useRefundModalStore from "@/states/refundModalStore";
+import useRefundModalStore from "@/context/refundModalStore";
 
 type TokenTypes = {
   user_id: string;

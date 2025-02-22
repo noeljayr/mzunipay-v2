@@ -5,7 +5,8 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { BASE_URL } from "@/constants/constants";
 import LoadingLight from "@/components/ux/LoadingLight";
-import { IconBuildingStore, IconUser } from "@tabler/icons-react";
+import { IconBuildingStore, IconUserCircle } from "@tabler/icons-react";
+import { isPasswordValid } from "@/utils/isPasswordValid";
 
 function Signup() {
   const [isLoading, setIsLoading] = useState(false);
@@ -20,49 +21,56 @@ function Signup() {
   const [statusMessage, setStatusMessage] = useState("");
   const [failed, setFailed] = useState(false);
   const [showMessage, setShowMessage] = useState(false);
+  const [showInvalidMessage, setShowInvalidMessage] = useState(false);
 
   const handleSignup = async (e: any) => {
     e.preventDefault(); // Prevent form submission from refreshing the page
     setFailed(false);
-    setSuccess(false);
-    setIsLoading(true);
-    setShowMessage(false);
 
-    try {
-      const response = await fetch(`${BASE_URL}/users/signup`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          email,
-          first_name,
-          last_name,
-          password,
-          account_type,
-        }),
-      });
+    if (isPasswordValid(password)) {
+      setShowInvalidMessage(false);
+      setSuccess(false);
+      setIsLoading(true);
+      setShowMessage(false);
 
-      const data = await response.json();
-      console.log(response);
+      try {
+        const response = await fetch(`${BASE_URL}/users/signup`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            email,
+            first_name,
+            last_name,
+            password,
+            account_type,
+          }),
+        });
 
-      if (response.ok) {
-        setShowMessage(true);
-        setStatusMessage(data.message);
-        setFailed(false);
-        setSuccess(true);
-        router.push("/landing/login")
-      } else {
-        setShowMessage(true);
-        setStatusMessage(data.message);
-        setFailed(true);
-        setIsError(data.message || "Login failed. Please try again.");
+        const data = await response.json();
+        console.log(response);
+
+        if (response.ok) {
+          setShowMessage(true);
+          setStatusMessage(data.message);
+          setFailed(false);
+          setSuccess(true);
+          router.push("/landing/login");
+        } else {
+          setShowMessage(true);
+          setStatusMessage(data.message);
+          setFailed(true);
+          setIsError(data.message || "Login failed. Please try again.");
+        }
+      } catch (error) {
+        setIsError("An error occurred. Please try again later.");
+        console.error("Error logging in:", error);
+      } finally {
+        setIsLoading(false); // Stop loading
       }
-    } catch (error) {
-      setIsError("An error occurred. Please try again later.");
-      console.error("Error logging in:", error);
-    } finally {
-      setIsLoading(false); // Stop loading
+    } else {
+      setShowInvalidMessage(true);
     }
   };
   return (
@@ -81,7 +89,7 @@ function Signup() {
           >
             <span className="selected-indicator"></span>
             <span className="icon mb-1">
-              <IconUser />
+              <IconUserCircle />
             </span>
             <b>Personal</b>
           </div>
@@ -143,6 +151,16 @@ function Signup() {
             placeholder="Password"
             className="password"
           />
+
+          {!showInvalidMessage ? (
+            <></>
+          ) : (
+            <>
+              <span className="failed w-full">
+                Password must not be less than 6 characters
+              </span>
+            </>
+          )}
         </div>
 
         {showMessage ? (
@@ -160,7 +178,7 @@ function Signup() {
         <button disabled={isLoading} className="cta">
           {isLoading ? <LoadingLight /> : isError ? "Try again" : "Signup"}
         </button>
-        <Link className="mr-auto font-medium" href="/landing/login">
+        <Link className="mr-auto font-medium opacity-75" href="/landing/login">
           Already have an account?
         </Link>
       </form>

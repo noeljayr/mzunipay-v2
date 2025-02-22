@@ -1,5 +1,5 @@
 "use client";
-import { useMenuStore } from "@/states/menuStore";
+import { useMenuStore } from "@/context/menuStore";
 import {
   IconArrowLeft,
   IconBuildingBank,
@@ -13,7 +13,7 @@ import UpgradeCustomer from "../UpgradeCustomer";
 import { deleteCookie, getCookie } from "cookies-next/client";
 import { useRouter } from "next/navigation";
 import { jwtDecode } from "jwt-decode";
-import useWidthdrawModalStore from "@/states/withdrawModalStore";
+import useWidthdrawModalStore from "@/context/withdrawModalStore";
 
 type TokenTypes = {
   user_id: string;

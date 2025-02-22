@@ -5,8 +5,10 @@ import { IconChevronDown } from "@tabler/icons-react";
 import { useState, useEffect } from "react";
 import Link from "next/link";
 import { getCookie, deleteCookie } from "cookies-next/client";
-import {jwtDecode} from "jwt-decode"; // Correct the import, as `jwtDecode` is the default export
+import {jwtDecode} from "jwt-decode";
 import { useRouter } from "next/navigation";
+import usePersonalDetailsModalStore from "@/context/personalDetailsModal";
+
 
 type TokenTypes = {
   user_id: string;
@@ -20,7 +22,8 @@ function Profile() {
   const [profileOptionsActive, setProfileOptionsActive] = useState(false);
   const [decoded, setDecoded] = useState<TokenTypes | null>(null); // State to store the decoded token
   const router = useRouter();
-
+  const {detailsUpdated} = usePersonalDetailsModalStore()
+  
   const logout = () => {
     deleteCookie("token");
     router.push("/landing");
@@ -37,10 +40,9 @@ function Profile() {
         console.error("Error decoding token", err);
       }
     }
-  }, []); // Empty dependency array ensures this runs only once on mount
+  }, [detailsUpdated]); // Empty dependency array ensures this runs only once on mount
 
   if (!decoded) {
-    // Optionally render a placeholder or nothing if no token is available
     return null;
   }
 
@@ -65,7 +67,7 @@ function Profile() {
       <IconChevronDown className="ml-auto cursor-pointer" />
 
       <div className="profile-options absolute flex flex-col">
-        <Link href="#">Profile</Link>
+        <Link href="/portal/profile">Profile</Link>
         <span
           onClick={() => {
             logout();

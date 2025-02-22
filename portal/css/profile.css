@@ -1,0 +1,141 @@
+.profile-page {
+  height: 100%;
+  overflow-y: auto;
+}
+
+.profile-overview .profile-icon {
+  height: 4rem;
+  width: 4rem;
+  display: flex;
+  border-radius: 50%;
+  align-items: center;
+  background-color: var(--white);
+}
+
+.profile-overview .profile-icon img {
+  height: auto;
+  width: 2.5rem;
+}
+
+.profile-overview .user-account-type {
+  font-size: 0.65rem;
+  font-weight: 500;
+  background-color: var(--border);
+  border-radius: 2rem;
+  padding: 0.5rem;
+  padding-top: 0.25rem;
+  padding-bottom: 0.25rem;
+  color: var(--primary);
+  width: fit-content;
+}
+
+.profile-overview .user-account-type svg {
+  height: 1rem;
+  width: 1rem;
+}
+
+.profile-overview .user-account-type svg path {
+  stroke-width: 2px;
+  stroke: var(--primary);
+}
+
+.profile-page .edit-btn {
+  background-color: var(--border);
+  border: 1px solid var(--border-2);
+  padding: 0.5rem;
+  padding-left: 0.75rem;
+  padding-right: 0.75rem;
+  border-radius: var(--radius);
+  font-size: 0.75rem;
+  font-weight: 500;
+  color: var(--primary);
+}
+
+.profile-page .edit-btn svg {
+  height: 0.75rem;
+  width: 0.75rem;
+}
+
+.profile-page .edit-btn svg path {
+  stroke-width: 2.5px;
+  stroke: var(--primary);
+}
+
+.profile-page h3 {
+  color: rgb(1, 9, 5, 0.7);
+}
+
+.profile-page .row {
+  width: 25rem;
+}
+
+.profile-page .input-group input:read-only {
+  background-color: transparent;
+  border: 1px solid transparent;
+  padding-left: 0;
+  padding-top: 0;
+  height: fit-content;
+  border-radius: 0;
+}
+
+.profile-page .input-group .password-input {
+  font-weight: 900;
+  letter-spacing: 5px;
+}
+
+.profile-page .checkbox,
+.two-fa .checkbox {
+  height: 1.5rem;
+  width: 1.5rem;
+  /* cursor: pointer; */
+  border: 1px solid var(--border-2);
+  border-radius: 0.35rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: var(--transition);
+}
+
+.profile-page .checkbox svg path {
+  stroke-width: 2px;
+  stroke: var(--primary);
+}
+
+.avatar-container {
+  grid-template-columns: repeat(auto-fit, minmax(4rem, 1fr));
+}
+
+.avatar-container .profile-avatar {
+  background-color: var(--white);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  width: 4rem;
+  height: 4rem;
+}
+
+.avatar-container .profile-avatar img {
+  height: 2.5rem;
+  width: 2.5rem;
+}
+
+@media not all and (min-width: 260px) {
+  .avatar-container .profile-avatar {
+    width: 2rem;
+    height: 2rem;
+  }
+
+  .avatar-container .profile-avatar img {
+    height: 1.5rem;
+    width: 1.5rem;
+  }
+
+  .avatar-container {
+    grid-template-columns: repeat(auto-fit, minmax(2rem, 1fr));
+  }
+}
+
+.avatar-container .selected-avatar {
+  border: 2px solid var(--primary);
+}

@@ -1,14 +1,12 @@
 "use client";
-import {
-  IconRefresh,
-} from "@tabler/icons-react";
+import { IconRefresh } from "@tabler/icons-react";
 
 import NumberFlow from "@number-flow/react";
 import { useEffect, useState } from "react";
 import { getCookie, setCookie } from "cookies-next/client";
 import { BASE_URL } from "@/constants/constants";
 import { formatDistanceToNow } from "date-fns";
-import useBalanceChangeState from "@/states/balanceChangeStore";
+import useBalanceChangeState from "@/context/balanceChangeStore";
 
 function TotalBalance() {
   const token = getCookie("token");

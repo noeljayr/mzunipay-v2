@@ -8,7 +8,7 @@ import TableRowLoading from "@/components/ux/TableRowLoading";
 import Error from "@/components/ux/Error";
 import { useCookies } from "next-client-cookies";
 import { BASE_URL } from "@/constants/constants";
-import useBalanceChangeState from "@/states/balanceChangeStore";
+import useBalanceChangeState from "@/context/balanceChangeStore";
 
 type TransactionProps = {
   to_wallet_id: string;

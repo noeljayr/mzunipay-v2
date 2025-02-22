@@ -2,13 +2,13 @@
 import { IconArrowLeft } from "@tabler/icons-react";
 import { useEffect, useState } from "react";
 import LoadingLight from "../ux/LoadingLight";
-import useWidthdrawModalStore from "@/states/withdrawModalStore";
+import useWidthdrawModalStore from "@/context/withdrawModalStore";
 import NumberFlow from "@number-flow/react";
 import { BASE_URL } from "@/constants/constants";
 import { getCookie } from "cookies-next/client";
 import Loading from "../ux/Loading";
 import Error from "../ux/Error";
-import useBalanceChangeState from "@/states/balanceChangeStore";
+import useBalanceChangeState from "@/context/balanceChangeStore";
 
 function Withdraw() {
   const token = getCookie("token");
@@ -27,7 +27,7 @@ function Withdraw() {
   const [floatAmount, setFloatAmount] = useState<number>(0);
   const [projectedBalance, setProjectedBalance] = useState(balance);
   const [isMoreThanBalance, setIsMoreThanBalance] = useState(false);
-  const {setBalanceState} = useBalanceChangeState()
+  const { setBalanceState } = useBalanceChangeState();
 
   const handleAmountChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     // Clean and format the raw input

@@ -42,8 +42,8 @@ function Login() {
         setShow(true);
         setFailed(false);
         setSuccess(true);
-        setErrorMessage("Welcome back!");
-        setCookie("token", data.token)
+        setErrorMessage("Welcome back! Gettting things ready...");
+        setCookie("token", data.token);
         router.push("/");
       } else {
         setSuccess(false);
@@ -102,7 +102,15 @@ function Login() {
         <button disabled={isLoading} className="cta">
           {isLoading ? <LoadingLight /> : isError ? "Try again" : "Login"}
         </button>
-        <Link className="mr-auto font-medium" href="/landing/signup">Create an account</Link>
+        <div className="flex just-between w-full">
+          <Link className="mr-auto font-medium opacity-75" href="/landing/signup">
+            Create an account
+          </Link>
+
+          <Link className="font-medium opacity-75" href="/landing/signup">
+            Forget password?
+          </Link>
+        </div>
       </form>
     </div>
   );

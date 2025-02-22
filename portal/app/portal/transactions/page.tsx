@@ -8,13 +8,11 @@ import {
   IconSearch,
 } from "@tabler/icons-react";
 import { useState, useEffect } from "react";
-import TransactionDetails from "@/components/Modals/TransactionDetails";
 import TableRowLoading from "@/components/ux/TableRowLoading";
 import Error from "@/components/ux/Error";
 import { getCookie } from "cookies-next/client";
 import { BASE_URL } from "@/constants/constants";
 import { useRouter, useSearchParams } from "next/navigation";
-import Refund from "@/components/Modals/Refund";
 
 
 type TransactionProps = {
@@ -92,7 +90,7 @@ function page() {
   const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearchTerm(e.target.value);
     setPage(1);
-    console.log("search term is: " + searchTerm)
+    console.log("search term is: " + searchTerm);
     router.push(`?page=1&search=${e.target.value}`);
   };
 
@@ -271,9 +269,6 @@ function page() {
           </div>
         </div>
       </div>
-
-      <TransactionDetails />
-      <Refund />
     </>
   );
 }

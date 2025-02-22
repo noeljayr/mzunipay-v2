@@ -3,14 +3,21 @@
 import Link from "next/link";
 import "@/css/sidebar.css";
 import { usePathname } from "next/navigation";
-import useDepositModalStore from "@/states/depositModalStore";
-import useWidthdrawModalStore from "@/states/withdrawModalStore";
-import useTransferModalStore from "@/states/transferModalStore";
+import useDepositModalStore from "@/context/depositModalStore";
+import useWidthdrawModalStore from "@/context/withdrawModalStore";
+import useTransferModalStore from "@/context/transferModalStore";
 import { getCookie } from "cookies-next/client";
 import { jwtDecode } from "jwt-decode";
 import UpgradeCustomer from "../UpgradeCustomer";
 
-import { IconHome, IconPlus, IconDownload, IconBuildingBank, IconArrowUp, IconSwitchVertical } from "@tabler/icons-react";
+import {
+  IconHome,
+  IconPlus,
+  IconDownload,
+  IconBuildingBank,
+  IconArrowUp,
+  IconSwitchVertical,
+} from "@tabler/icons-react";
 
 type TokenTypes = {
   user_id: string;
@@ -53,18 +60,18 @@ function SideBar() {
           Transactions
         </Link>
 
-        <Link onClick={setDepositModalActive} href="">
-        <IconPlus />  
+        <Link onClick={setDepositModalActive} href="#deposit">
+          <IconPlus />
           Deposit
         </Link>
 
-        <Link onClick={setTransferModalActive} href="">
-        <IconArrowUp />
+        <Link onClick={setTransferModalActive} href="#transfer">
+          <IconArrowUp />
           Transfer
         </Link>
 
-        <Link onClick={setWithdrawModalActive} href="">
-        <IconDownload />
+        <Link onClick={setWithdrawModalActive} href="#withdraw">
+          <IconDownload />
           Withdraw
         </Link>
 
