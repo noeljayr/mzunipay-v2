@@ -15,6 +15,7 @@ import { useRouter } from "next/navigation";
 import { jwtDecode } from "jwt-decode";
 import useWidthdrawModalStore from "@/context/withdrawModalStore";
 import Profile from "./Profile";
+import { useEffect, useState } from "react";
 type TokenTypes = {
   user_id: string;
   account_type: string;
@@ -30,10 +31,17 @@ function MobileMenu() {
   const token = getCookie("token");
   const { setWithdrawModalActive } = useWidthdrawModalStore();
 
-  const logout = () => {
-    deleteCookie("token");
-    router.push("/landing");
-  };
+  const [width, setWidth] = useState(window.innerWidth);
+
+  useEffect(() => {
+    const handleResize = () => setWidth(window.innerWidth);
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, [width]);
+
+  if (width > 640) {
+    return <></>;
+  }
 
   if (token) {
     const user: TokenTypes = jwtDecode(token);
